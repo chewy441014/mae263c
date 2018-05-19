@@ -1,4 +1,6 @@
 import RPi.GPIO as io
+import time
+
 io.setmode(io.BOARD)
 
 in1_pin = 16
@@ -8,34 +10,25 @@ en_pin = 10
 chan_list = [in1_pin, in2_pin, en_pin]
 
 io.setup(chan_list, io.OUT)
+hz = 100
+dt = 1/hz
 
-def set(property, value):
-	try:
-		f = open("/sys/class/rpi-pwm/pwm0" + property, 'w')
-		f.write(value)
-		f.close()
-	except:
-		print("Error writing to: " + property + "value: " + value)
+p1 = io.PWM(in1_pin, hz)
+p2 = io.PWM(in2_pin, hz)
 
-set("delayed", "0")
-set("mode", "pwm")
-set("frequency", "500")
-set("active", "1")
-
-def clockwise():
-	io.output(in1_pin, True)
-	io.output(in2_pin, False)
+def clockwise(duty):
+	p1.start(duty)
+	time.sleep(dt)
+	p2.start(duty)
 	
-def counter_clockwise():
-	io.output(in1_pin, False)
-	io.output(in2_pin, True)
 	
-while True:
-	cmd = raw_input("Command, f/r 0...9, E.g f5 :")
-	direction = cmd[0]
-	if direction == "f":
-		clockwise()
-	else:
-		counter_clockwise()
-	speed = int(cmd[1]) * 11
-	set("duty", str(speed))
+def counter_clockwise(duty):
+	p2.start(duty)
+	time.sleep(dt)
+	p1.start(duty)	
+	
+clockwise(50)
+input('Press return to stop:')
+p1.stop
+p2.stop
+io.cleanup()
