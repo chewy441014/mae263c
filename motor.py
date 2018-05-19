@@ -7,7 +7,7 @@ en_pin = 10
 
 chan_list = [in1_pin, in2_pin, en_pin]
 
-GPIO.setup(chan_list, GPIO.OUT)
+io.setup(chan_list, io.OUT)
 
 def set(property, value):
 	try:
