@@ -1,8 +1,12 @@
 import RPi.GPIO as io
-io.setmode(io.BCM)
+io.setmode(io.BOARD)
 
-in1_pin = 4
-in2_pin = 17
+in1_pin = 16
+in2_pin = 18
+en_pin = 10
+
+
+GPIO.setup(chan_list, GPIO.OUT)
 
 def set(property, value)
 	try:
