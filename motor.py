@@ -5,6 +5,7 @@ in1_pin = 16
 in2_pin = 18
 en_pin = 10
 
+chan_list = [in1_pin, in2_pin, en_pin]
 
 GPIO.setup(chan_list, GPIO.OUT)
 
