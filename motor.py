@@ -9,7 +9,7 @@ chan_list = [in1_pin, in2_pin, en_pin]
 
 GPIO.setup(chan_list, GPIO.OUT)
 
-def set(property, value)
+def set(property, value):
 	try:
 		f = open("/sys/class/rpi-pwm/pwm0" + property, 'w')
 		f.write(value)
