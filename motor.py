@@ -17,12 +17,14 @@ p1 = io.PWM(in1_pin, hz)
 p2 = io.PWM(in2_pin, hz)
 
 def clockwise(duty):
+	io.output(en_pin, io.HIGH)
 	p1.start(duty)
 	time.sleep(dt)
 	p2.start(duty)
 	
 	
 def counter_clockwise(duty):
+	io.output(en_pin, io.HIGH)
 	p2.start(duty)
 	time.sleep(dt)
 	p1.start(duty)	
