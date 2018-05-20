@@ -30,9 +30,9 @@ def counter_clockwise(duty):
 	time.sleep(dt)
 	p1.start(duty)	
 	
-clockwise(50)
+clockwise(100)
 enter = raw_input("Press return to stop:")
-counter_clockwise(50)
+counter_clockwise(100)
 enter = raw_input("Press return to stop:")
 p1.stop
 p2.stop
