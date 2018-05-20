@@ -3,8 +3,8 @@ import time
 
 io.setmode(io.BOARD)
 
-in1_pin = 8
-in2_pin = 10
+in1_pin = 16
+in2_pin = 18
 en_pin = 12
 
 chan_list = [in1_pin, in2_pin, en_pin]
