@@ -31,9 +31,9 @@ def counter_clockwise(duty):
 	p1.start(duty)	
 	
 clockwise(50)
-input('Press return to stop:')
+enter = raw_input("Press return to stop:")
 counter_clockwise(50)
-input('Press return to stop:')
+enter = raw_input("Press return to stop:")
 p1.stop
 p2.stop
 io.setup(chan_list, io.IN)
