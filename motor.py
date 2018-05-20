@@ -10,6 +10,7 @@ en_pin = 12
 chan_list = [in1_pin, in2_pin, en_pin]
 
 io.setup(chan_list, io.OUT)
+print("Set pins as outputs")
 hz = 50
 dt = 1/hz
 
@@ -30,14 +31,8 @@ def counter_clockwise(duty):
 	p1.start(duty)	
 	
 clockwise(100)
-print(io.input(in1_pin))
-print(io.input(in2_pin))
-print(io.input(en_pin))
 enter = raw_input("Press return to stop:")
 counter_clockwise(100)
-print(io.input(in1_pin))
-print(io.input(in2_pin))
-print(io.input(en_pin))
 enter = raw_input("Press return to stop:")
 p1.stop
 p2.stop
