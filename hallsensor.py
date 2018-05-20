@@ -3,24 +3,36 @@
 import time
 import datetime
 import RPi.GPIO as io
+import math
 
 def sensorCallback(channel):
 	timestamp = time.time()
-	stamp = datetime.datetime.fromtimestamp(timestamp).strftime('%H:%M:%S')
+	stamp = datetime.datetime.fromtimestamp(timestamp).strftime('%H:%M:%S:%f')
 	if io.input(channel):
-		print("Sensor HIGH" + stamp)
+		#print("Sensor HIGH" + stamp)
 		sig = 1
 	else:
-		print("Sensor LOW" + stamp)
+		#print("Sensor LOW" + stamp)
 		sig = 0
 	return sig
 	
+def countstorad(count):
+	rad = 2*math.pi*count/9/48
+	return rad	
+
 def main():
+	counter = 0
 	A = sensorCallback(22)
-	B = sensorCallback(15)
 	try:
 		while True:
 			time.sleep(0.1)
+			Anew = sensorCallback(22)
+			B = sensorCallback(15)
+			if A != Anew:
+				if B != A:
+					counter+=1
+				else
+					counter-=1
 	except KeyboardInterrupt:
 		io.cleanup()
 
