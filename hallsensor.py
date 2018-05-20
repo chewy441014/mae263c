@@ -31,8 +31,12 @@ def main():
 			if A != Anew:
 				if B != A:
 					counter+=1
-				else
+				else:
 					counter-=1
+			angle = countstorad(counter)
+			print("Position: ")
+			print(counter)
+			print(angle)
 	except KeyboardInterrupt:
 		io.cleanup()
 
