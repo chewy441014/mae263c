@@ -11,7 +11,7 @@ chan_list = [in1_pin, in2_pin, en_pin]
 
 io.setwarnings(False)
 io.setup(chan_list, io.OUT)
-hz = 100
+hz = 50
 dt = 1/hz
 
 p1 = io.PWM(in1_pin, hz)
