@@ -110,3 +110,8 @@ def control1(pos_d):
 			# in order to do control
 	except KeyboardInterrupt:
 		io.cleanup()
+
+clockwise(100)
+time.sleep(0.1)
+p1.stop
+p2.stop
