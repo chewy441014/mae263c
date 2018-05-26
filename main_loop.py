@@ -15,8 +15,8 @@ m1_in2_pin = 16
 m1_en_pin = 18
 chan_list = [m1_en_pin, m1_in1_pin, m1_in2_pin]
 io.setup(chan_list, io.OUT)
-p1 = io.PWM(in1_pin, hz)
-p2 = io.PWM(in2_pin, hz)
+p1 = io.PWM(m1_in1_pin, hz)
+p2 = io.PWM(m1_in2_pin, hz)
 
 # motor 2
 m2_in1_pin = 25
@@ -73,10 +73,12 @@ def counter_clockwise(duty, pwm1, pwm2, en_pin):
 	pwm1.start(100-duty)	
 
 def countstorad(count):
+	# returns the joints space angle in radians
 	rad = 2*math.pi*count/8/kr
 	return rad	
 
 def sensorCallback(channel):
+	# this function is called when an encoder reading is detected
 	if io.input(channel):
 		sig = 1
 	else:
@@ -84,34 +86,24 @@ def sensorCallback(channel):
 	return sig
 	
 def getpose(key_d):
-	pose = [1,1]
-	return pose
+	# calculate the inverse kinematics
+	# return the joint space position of desired key
+	# return pose_desired
 	
 def control1(pos_d):
 	# initialize the encoders
-	counter = 0
-	A = sensorCallback(22)
-	try:
-		while True:
-			time.sleep(0.1)
-			Anew = sensorCallback(22)
-			B = sensorCallback(15)
-			if A != Anew:
-				if B != A:
-					counter+=1
-				else:
-					counter-=1
-			angle = countstorad(counter)
-			print("Position: ")
-			print(counter)
-			print(angle)
-			# the above code gives the joint angle of one joint
-			# we need all joint angles, so that we can generate the error
-			# in order to do control
-	except KeyboardInterrupt:
-		io.cleanup()
+	# while error < tolerance
+		# get current position
+		# estimate g(q)
+		# calculate position error
+		# u = PD control with gravity compensation
+		# duty = function(u)
+		# move the motors according to duty
 
-clockwise(100)
-time.sleep(0.1)
-p1.stop
-p2.stop
+def taskcontrol(string_d)
+	# for each key in string_desired
+		# getpose(key_desired)
+		# control(pose_desired)
+		# control(intermediate home position)
+	# end for loop
+	# return to global home position
