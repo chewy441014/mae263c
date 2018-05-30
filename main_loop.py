@@ -92,18 +92,34 @@ def getpose(key_d):
 	
 def control1(pos_d):
 	# initialize the encoders
+	# set parameters of robot
+	a1,a2=
+	len_link1=
+	len_link2=
+	m_link1=
+	m_link2=
+	m_motor=
+	k_t=k_e=k=0.44
+	R=5.5#resistance
+	V=
 	# while error < tolerance
 		# get current position
 		# estimate g(q)
+		g_q=(m_link1*len_link1+m_motor*a1+m_link2*a1)*math.cos(JOINT_ANGLE_1)+m_link2*len_link2*math.cos(JOINT_ANGLE_1+JOINT_ANGLE_2)
 		# calculate position error
 		# u = PD control with gravity compensation
+		u=g_q+K_p*POSITION_ERROR-K_d*ANGULAR_VELOCITY
 		# duty = function(u)
+		V_d=R*u/k+k*ANGULAR_VELOCITY
+		duty=V_d/V*100
 		# move the motors according to duty
 
-def taskcontrol(string_d)
+def taskcontrol(string_d):
 	# for each key in string_desired
 		# getpose(key_desired)
 		# control(pose_desired)
 		# control(intermediate home position)
 	# end for loop
 	# return to global home position
+
+def setparameter():
