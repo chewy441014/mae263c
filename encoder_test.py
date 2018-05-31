@@ -25,7 +25,7 @@ def encoder1Callback(channel):
 		A = 1
 	else:
 		A = 0
-	if io.input(encoder1_sensors(1)):
+	if io.input(encoder1_sensors[1]):
 		B = 1
 	else:
 		B = 0
