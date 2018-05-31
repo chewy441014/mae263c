@@ -20,7 +20,7 @@ encoder1_count = 0
 
 def encoder1Callback(channel):
 	# this function is called when an encoder reading is detected
-	global A_old, encoder1_count
+	global A1_old, encoder1_count
 	if io.input(channel):
 		A = 1
 	else:
