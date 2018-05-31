@@ -15,7 +15,6 @@ io.setup(en2_pin, io.IN, pull_up_down=io.PUD_UP)
 
 # encoder 1
 encoder1_sensors = [en1_pin, en2_pin]
-io.add_event_detect(en1_pin, io.BOTH, callback=encoder1Callback)
 A1_old = 0
 encoder1_count = 0
 
@@ -45,7 +44,8 @@ def countstorad(count):
 	# returns the joints space angle in radians
 	rad = 2*math.pi*count/8/48
 	return rad	
-	
+
+io.add_event_detect(en1_pin, io.BOTH, callback=encoder1Callback)
 while True:
 	print(countstorad(encoder1_count))
 	enter = raw_input("Press to continue: ")
