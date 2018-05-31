@@ -168,26 +168,72 @@ def getpose(key_d):
 def control1(pos_d):
 	# initialize the encoders
 	# set parameters of robot
-	a1,a2=
-	len_link1=
-	len_link2=
-	m_link1=
-	m_link2=
-	m_motor=
-	k_t=k_e=k=0.44
-	R=5.5#resistance
-	V=
-	# while error < tolerance
+	a1,a2=0.115,0.064
+	len_link1=0.07
+	len_link2=0.04
+	m_link1=0.005
+	m_link2=0.003
+	m_motor=0.06
+	k=0.048
+	R=3.6
+	V=5
+	K_p,K_d=2.5,1
+	tolerance=0.1
+	while error < tolerance
 		# get current position
 		# estimate g(q)
-		g_q=(m_link1*len_link1+m_motor*a1+m_link2*a1)*math.cos(JOINT_ANGLE_1)+m_link2*len_link2*math.cos(JOINT_ANGLE_1+JOINT_ANGLE_2)
+		g_q=[(m_link1*len_link1+m_motor*a1+m_link2*a1)*math.cos(JOINT_ANGLE_1)+m_link2*len_link2*math.cos(JOINT_ANGLE_1+JOINT_ANGLE_2),\
+		m_link2*len_link2*math.cos(JOINT_ANGLE_1+JOINT_ANGLE_2)]
 		# calculate position error
+		POSITION_ERROR=pos_d-pos_current
 		# u = PD control with gravity compensation
-		u=g_q+K_p*POSITION_ERROR-K_d*ANGULAR_VELOCITY
+		u=[g_q[0]+K_p*POSITION_ERROR-K_d*ANGULAR_VELOCITY,\
+		g_q[1]+K_p*POSITION_ERROR-K_d*ANGULAR_VELOCITY]
+		for i in range(2):
+			if u[i]>=0.08:
+				u[i]=0.08
+			elif u[i]<=-0.08:
+				u[i]=-0.08
+		
 		# duty = function(u)
-		V_d=R*u/k+k*ANGULAR_VELOCITY
-		duty=V_d/V*100
+		V_d=[R*u[0]/k+k*ANGULAR_VELOCITY,R*u[1]/k+k*ANGULAR_VELOCITY]
+		duty=[V_d[0]/V*100,V_d[1]/V*100]
+
 		# move the motors according to duty
+		#motor1 duty cycle ##############################
+		if duty[0]>0:
+			if duty[0]>=100:
+				duty[0]=100
+			elif duty[0]<=60:
+				duty[0]=
+			clockwise(duty, p1, p2, m1_en_pin)
+		else:
+			if duty[0]<=-100:
+				duty[0]=100
+			elif duty[0]>=-60:
+				duty[0]=
+			else:
+				duty[0]=-duty[0]
+			counter_clockwise(duty,p1,p2,m1_en_pin)
+		###################################################
+		#motor2 duty cycle ################################
+		if duty[1]>0:
+			if duty[1]>=100:
+				duty[1]=100
+			elif duty[1]<=60:
+				duty[1]=
+			clockwise(duty, p3, p4, m2_en_pin)
+		else:
+			if duty[1]<=-100:
+				duty[1]=100
+			elif duty[1]>=-60:
+				duty[1]=
+			else:
+				duty[1]=-duty[1]
+			counter_clockwise(duty,p3,p4,m2_en_pin)
+		####################################################
+		
+
 
 def taskcontrol(string_d):
 	# for each key in string_desired
@@ -195,6 +241,5 @@ def taskcontrol(string_d):
 		# control(pose_desired)
 		# control(intermediate home position)
 	# end for loop
-	# return to global home position
-
+	# return to global home position;
 def setparameter():
