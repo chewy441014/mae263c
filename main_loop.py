@@ -316,14 +316,14 @@ def control1(pos_d):
 	#This is for motor3 control
 	##################################################
 	tolerance=0.01
-	pos_error3=100
-	while pos_error3>=tolerance:
-		pos_error3=pos_d[2]-countstorad(encoder3_count)*r_pulley
-		duty_cycle_3=60
-		if pos_error3>0:
-			counter_clockwise(duty_cycle_3, p5, p6, m3_en_pin)
-		elif pos_error3<0:
-			clockwise(duty_cycle_3,p5,p6,m3_en_pin)
+	pos_error1=100
+	while pos_error1>=tolerance:
+		pos_error1=pos_d[0]-countstorad(encoder1_count)*r_pulley
+		duty_cycle_1=60
+		if pos_error1>0:
+			counter_clockwise(duty_cycle_1, p1, p2, m1_en_pin)
+		elif pos_error1<0:
+			clockwise(duty_cycle_1,p1,p2,m1_en_pin)
 	##################################################
 	#This is for motor1 and motor2 control
 	##################################################
@@ -331,14 +331,14 @@ def control1(pos_d):
 	position_error=[100,100]
 	while max(position_error[0],position_error[1]) > tolerance
 		# get current position
-		pos_current=[countstorad(encoder1_count),countstorad(encoder2_count)]
-		angular_velocity=[vel1,vel2]
+		pos_current=[countstorad(encoder2_count),countstorad(encoder3_count)]
+		angular_velocity=[vel2,vel3]
 		# estimate g(q)
 		g_q=[(m_link1*len_link1+m_motor*a1+m_link2*a1)*math.cos(pos_current[0])+\
 		m_link2*len_link2*math.cos(pos_current[0]+pos_current[1]),\
 		m_link2*len_link2*math.cos(pos_current[0]+pos_current[1])]
 		# calculate position error
-		position_error=[pos_d[0]-pos_current[0],pos_d[1]-pos_current[1]]
+		position_error=[pos_d[1]-pos_current[0],pos_d[2]-pos_current[1]]
 		# u = PD control with gravity compensation
 		u=[g_q[0]+K_p*position_error[0]-K_d*angular_velocity[0],\
 		g_q[1]+K_p*position_error[1]-K_d*angular_velocity[1]]
@@ -359,7 +359,7 @@ def control1(pos_d):
 				duty[0]=100
 			elif duty[0]<=60:
 				duty[0]=50
-			clockwise(duty[0], p1, p2, m1_en_pin)
+			clockwise(duty[0], p3, p4, m2_en_pin)
 		else:
 			if duty[0]<=-100:
 				duty[0]=0
@@ -367,7 +367,7 @@ def control1(pos_d):
 				duty[0]=100+duty[0]
 			elif duty[0]>-60:
 				duty[0]=50
-			clockwise(duty[0],p1,p2,m1_en_pin)
+			clockwise(duty[0],p3,p4,m2_en_pin)
 		###################################################
 		#motor2 duty cycle ################################
 		if duty[1]>0:
@@ -375,7 +375,7 @@ def control1(pos_d):
 				duty[1]=100
 			elif duty[1]<=60:
 				duty[1]=50
-			clockwise(duty[1], p1, p2, m1_en_pin)
+			clockwise(duty[1], p5, p6, m3_en_pin)
 		else:
 			if duty[1]<=-100:
 				duty[1]=0
@@ -383,7 +383,7 @@ def control1(pos_d):
 				duty[1]=100+duty[0]
 			elif duty[1]>-60:
 				duty[1]=50
-			clockwise(duty[1],p1,p2,m1_en_pin)
+			clockwise(duty[1],p5,p6,m3_en_pin)
 		####################################################
 
 
