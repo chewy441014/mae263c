@@ -342,7 +342,7 @@ def control1(pos_d):
 		# u = PD control with gravity compensation
 		u=[g_q[0]+K_p*position_error[0]-K_d*angular_velocity[0],\
 		g_q[1]+K_p*position_error[1]-K_d*angular_velocity[1]]
-		for i in range(2): 
+		for i in range(2):
 			if u[i]>=0.08:
 				u[i]=0.08
 			elif u[i]<=-0.08:
@@ -385,6 +385,12 @@ def control1(pos_d):
 				duty[1]=50
 			clockwise(duty[1],p5,p6,m3_en_pin)
 		####################################################
+	p1.stop()
+	p2.stop()
+	p3.stop()
+	p4.stop()
+	p5.stop()
+	p6.stop()
 
 
 def taskcontrol(command_list):
