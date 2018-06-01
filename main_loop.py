@@ -379,8 +379,8 @@ def control1(pos_d):
 		else:
 			if duty[1]<=-100:
 				duty[1]=0
-			elif duty[1]>-100 and duty[0]<=-60：
-				duty[1]=100+duty[0]
+			elif duty[1]>-100 and duty[1]<=-60：
+				duty[1]=100+duty[1]
 			elif duty[1]>-60:
 				duty[1]=50
 			clockwise(duty[1],p5,p6,m3_en_pin)
