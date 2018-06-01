@@ -110,7 +110,7 @@ keydic={'Ctrl1':[0,-(a0+20),12],
 		}
 	
 # set parameters of robot (SI UNITS)
-a1,a2=0.115,0.064
+L1,L2=0.115,0.064
 len_link1=0.07
 len_link2=0.04#distances of centers of mass from joint axes
 m_link1=0.005
@@ -119,7 +119,7 @@ m_motor=0.06
 k=0.048
 R=3.6
 V=5
-r_pulley=0.0181102 #unit meters
+r_pulley=0.0181102/2 #unit meters
 K_p,K_d=2.5,1.5
 
 # motor 1
@@ -317,10 +317,10 @@ def control1(pos_d):
 	##################################################
 	#This is for motor1 control
 	##################################################
-	tolerance=0.01
+	tolerance=0.005
 	pos_error1=100
 	while pos_error1>=tolerance:
-		pos_error1=pos_d[0]-countstorad(encoder1_count)*r_pulley
+		pos_error1=pos_d[0]-countstorad(encoder1_count)
 		duty_cycle_1=60
 		if pos_error1>0:
 			counter_clockwise(duty_cycle_1, p1, p2, m1_en_pin)
@@ -329,14 +329,13 @@ def control1(pos_d):
 	##################################################
 	#This is for motor2 and motor3 control
 	##################################################
-	tolerance=0.1
 	position_error=[100,100]
 	while max(position_error[0],position_error[1]) > tolerance
 		# get current position
 		pos_current=[countstorad(encoder2_count),countstorad(encoder3_count)]
 		angular_velocity=[vel2,vel3]
 		# estimate g(q)
-		g_q=[(m_link1*len_link1+m_motor*a1+m_link2*a1)*math.cos(pos_current[0])+\
+		g_q=[(m_link1*len_link1+m_motor*L1+m_link2*L1)*math.cos(pos_current[0])+\
 		m_link2*len_link2*math.cos(pos_current[0]+pos_current[1]),\
 		m_link2*len_link2*math.cos(pos_current[0]+pos_current[1])]
 		# calculate position error
