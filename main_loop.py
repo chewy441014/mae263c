@@ -1,6 +1,5 @@
 import RPi.GPIO as io
 import time
-import datetime
 import math
 
 io.setmode(io.BOARD)
@@ -8,6 +7,7 @@ io.setmode(io.BOARD)
 hz = 50
 dt = 1/hz
 kr = 48
+enc_res = 0.01636246
 
 # motor 1
 m1_in1_pin = 12
@@ -48,6 +48,8 @@ io.setup(en2_pin, io.IN, pull_up_down=io.PUD_UP)
 encoder1_sensors = [en1_pin, en2_pin]
 A1_old = 0
 encoder1_count = 0
+A1_t1 = time.time()
+vel1 = 0
 
 # sensor 3
 en3_pin = 31
@@ -61,6 +63,8 @@ io.setup(en4_pin, io.IN, pull_up_down=io.PUD_UP)
 encoder2_sensors = [en3_pin, en4_pin]
 A2_old = 0
 encoder2_count = 0
+A2_t1 = time.time()
+vel2 = 0
 
 # sensor 5
 en5_pin = 15
@@ -74,6 +78,8 @@ io.setup(en6_pin, io.IN, pull_up_down=io.PUD_UP)
 encoder3_sensors = [en5_pin, en6_pin]
 A3_old = 0
 encoder3_count = 0
+A3_t1 = time.time()
+vel3 = 0
 
 def clockwise(duty, pwm1, pwm2, en_pin):
 	io.output(en_pin, io.HIGH)
@@ -105,7 +111,8 @@ def resetEncoders():
 
 def encoder1Callback(channel):
 	# this function is called when an encoder reading is detected
-	global A1_old, encoder1_count
+	global A1_old, encoder1_count, A1_t1
+	A1_t2 = time.time()
 	if io.input(channel):
 		A = 1
 	else:
@@ -117,14 +124,18 @@ def encoder1Callback(channel):
 	if A != A1_old:
 		if A != B:
 			encoder1_count += 1
+			vel1 = enc_res/(A1_t2 - A1_t1)
 		else:
 			encoder1_count -= 1
+			vel1 = -enc_res/(A1_t2 - A1_t1)
 	A1_old = A
+	A1_t1 = A1_t2
 io.add_event_detect(en1_pin, io.BOTH, callback=encoder1Callback)
 	
 def encoder2Callback(channel):
 	# this function is called when an encoder reading is detected
-	global A2_old, encoder2_count
+	global A2_old, encoder2_count, A2_t1
+	A2_t2 = time.time()
 	if io.input(channel):
 		A = 1
 	else:
@@ -136,14 +147,18 @@ def encoder2Callback(channel):
 	if A != A2_old:
 		if A != B:
 			encoder2_count += 1
+			vel2 = enc_res/(A2_t2 - A2_t1)
 		else:
 			encoder2_count -= 1
+			vel2 = -enc_res/(A2_t2 - A2_t1)
 	A2_old = A
+	A2_t1 = A1_t2
 io.add_event_detect(en3_pin, io.BOTH, callback=encoder2Callback)
 
 def encoder3Callback(channel):
 	# this function is called when an encoder reading is detected
-	global A3_old, encoder3_count
+	global A3_old, encoder3_count, A3_t1
+	A3_t2 = time.time()
 	if io.input(channel):
 		A = 1
 	else:
@@ -155,9 +170,12 @@ def encoder3Callback(channel):
 	if A != A3_old:
 		if A != B:
 			encoder3_count += 1
+			vel3 = enc_res/(A3_t2 - A3_t1)
 		else:
 			encoder3_count -= 1
+			vel3 = -enc_res/(A3_t2 - A3_t1)
 	A3_old = A
+	A3_t1 = A3_t2
 io.add_event_detect(en5_pin, io.BOTH, callback=encoder3Callback)
 
 def getpose(key_d):
