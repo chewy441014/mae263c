@@ -132,7 +132,7 @@ p1 = io.PWM(m1_in1_pin, hz)
 p2 = io.PWM(m1_in2_pin, hz)
 
 # motor 2
-m2_in1_pin = 25
+m2_in1_pin = 22
 m2_in2_pin = 32
 m2_en_pin = 36
 chan_list = [m2_en_pin, m2_in1_pin, m2_in2_pin]
