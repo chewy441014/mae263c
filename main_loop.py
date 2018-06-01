@@ -244,32 +244,32 @@ def control1(pos_d):
 			if duty[0]>=100:
 				duty[0]=100
 			elif duty[0]<=60:
-				duty[0]=0
-			clockwise(duty, p1, p2, m1_en_pin)
+				duty[0]=50
+			clockwise(duty[0], p1, p2, m1_en_pin)
 		else:
 			if duty[0]<=-100:
-				duty[0]=100
-			elif duty[0]>=-60:
 				duty[0]=0
-			else:
-				duty[0]=-duty[0]
-			counter_clockwise(duty[0],p1,p2,m1_en_pin)
+			elif duty[0]>-100 and duty[0]<=-60
+				duty[0]=100+duty[0]
+			elif duty[0]>-60:
+				duty[0]=50
+			clockwise(duty[0],p1,p2,m1_en_pin)
 		###################################################
 		#motor2 duty cycle ################################
 		if duty[1]>0:
 			if duty[1]>=100:
 				duty[1]=100
 			elif duty[1]<=60:
-				duty[1]=0
-			clockwise(duty, p3, p4, m2_en_pin)
+				duty[1]=50
+			clockwise(duty[1], p1, p2, m1_en_pin)
 		else:
 			if duty[1]<=-100:
-				duty[1]=100
-			elif duty[1]>=-60:
 				duty[1]=0
-			else:
-				duty[1]=-duty[1]
-			counter_clockwise(duty[1],p3,p4,m2_en_pin)
+			elif duty[1]>-100 and duty[0]<=-60
+				duty[1]=100+duty[0]
+			elif duty[1]>-60:
+				duty[1]=50
+			clockwise(duty[1],p1,p2,m1_en_pin)
 		####################################################
 		
 
