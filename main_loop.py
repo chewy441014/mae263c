@@ -218,7 +218,7 @@ def control1(pos_d):
 	while max(position_error[0],position_error[1]) > tolerance
 		# get current position
 		pos_current=[countstorad(encoder1_count),countstorad(encoder2_count)]
-		ANGULAR_VELOCITY=[vel1,vel2]
+		angular_velocity=[vel1,vel2]
 		# estimate g(q)
 		g_q=[(m_link1*len_link1+m_motor*a1+m_link2*a1)*math.cos(pos_current[0])+\
 		m_link2*len_link2*math.cos(pos_current[0]+pos_current[1]),\
@@ -226,8 +226,8 @@ def control1(pos_d):
 		# calculate position error
 		position_error=[pos_d[0]-pos_current[0],pos_d[1]-pos_current[1]]
 		# u = PD control with gravity compensation
-		u=[g_q[0]+K_p*position_error[0]-K_d*ANGULAR_VELOCITY[0],\
-		g_q[1]+K_p*position_error[1]-K_d*ANGULAR_VELOCITY[1]]
+		u=[g_q[0]+K_p*position_error[0]-K_d*angular_velocity[0],\
+		g_q[1]+K_p*position_error[1]-K_d*angular_velocity[1]]
 		for i in range(2): 
 			if u[i]>=0.08:
 				u[i]=0.08
@@ -235,7 +235,7 @@ def control1(pos_d):
 				u[i]=-0.08
 		
 		# duty = function(u)
-		V_d=[R*u[0]/k+k*ANGULAR_VELOCITY[0],R*u[1]/k+k*ANGULAR_VELOCITY[1]]
+		V_d=[R*u[0]/k+k*angular_velocity[0],R*u[1]/k+k*angular_velocity[1]]
 		duty=[V_d[0]/V*100,V_d[1]/V*100]
 
 		# move the motors according to duty
