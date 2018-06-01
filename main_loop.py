@@ -9,6 +9,19 @@ dt = 1/hz
 kr = 48
 enc_res = 0.01636246
 
+# set parameters of robot
+a1,a2=0.115,0.064
+len_link1=0.07
+len_link2=0.04#distances of centers of mass from joint axes
+m_link1=0.005
+m_link2=0.003
+m_motor=0.06
+k=0.048
+R=3.6
+V=5
+r_pulley=0.0181102 #unit meters
+K_p,K_d=2.5,1.5
+
 # motor 1
 m1_in1_pin = 12
 m1_in2_pin = 16
@@ -183,13 +196,12 @@ def getpose(key_d):
 	# return the joint space position of desired key
 	# return pose_desired
 	
-def control1(pos_d,p1,p2,p3,p4,p5,p6,m1_en_pin,m2_en_pin,m3_en_pin):
+def control1(pos_d):
 	# initialize the encoders
 	##################################################
 	#This is for motor3 control
 	##################################################
 	tolerance=0.01
-	r_pulley=0.0181102 #unit meters
 	pos_error3=100
 	while pos_error3>=tolerance:
 		pos_error3=pos_d[2]-countstorad(encoder3_count)*r_pulley
@@ -201,17 +213,6 @@ def control1(pos_d,p1,p2,p3,p4,p5,p6,m1_en_pin,m2_en_pin,m3_en_pin):
 	##################################################
 	#This is for motor1 and motor2 control
 	##################################################
-	# set parameters of robot
-	a1,a2=0.115,0.064
-	len_link1=0.07
-	len_link2=0.04
-	m_link1=0.005
-	m_link2=0.003
-	m_motor=0.06
-	k=0.048
-	R=3.6
-	V=5
-	K_p,K_d=2.5,1.5
 	tolerance=0.1
 	position_error=[100,100]
 	while max(position_error[0],position_error[1]) > tolerance
