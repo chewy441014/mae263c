@@ -10,47 +10,46 @@ en_pin = 40
 chan_list = [in1_pin, in2_pin, en_pin]
 
 io.setup(chan_list, io.OUT)
-print("Set pins as outputs")
 hz = 50
 dt = 1/hz
 
 p1 = io.PWM(in1_pin, hz)
 p2 = io.PWM(in2_pin, hz)
 
-def clockwise(duty):
+def clockwise(duty, pwm1, pwm2, en_pin):
 	io.output(en_pin, io.HIGH)
-	p1.start(duty)
-	time.sleep(dt)
-	p2.start(duty)
+	pwm1.start(duty)
+	time.sleep(duty/100*dt)
+	pwm2.start(100-duty)
 	
 	
-def counter_clockwise(duty):
+def counter_clockwise(duty, pwm1, pwm2, en_pin):
 	io.output(en_pin, io.HIGH)
-	p2.start(duty)
-	time.sleep(dt)
-	p1.start(duty)	
+	pwm2.start(duty)
+	time.sleep(duty/100*dt)
+	pwm1.start(100-duty)
 	
-clockwise(0)
+clockwise(0,p1,p2,en_pin)
 enter = raw_input("Press return to stop:")
-clockwise(10)
+clockwise(10,p1,p2,en_pin)
 enter = raw_input("Press return to stop:")
-clockwise(20)
+clockwise(20,p1,p2,en_pin)
 enter = raw_input("Press return to stop:")
-clockwise(30)
+clockwise(30,p1,p2,en_pin)
 enter = raw_input("Press return to stop:")
-clockwise(40)
+clockwise(40,p1,p2,en_pin)
 enter = raw_input("Press return to stop:")
-clockwise(50)
+clockwise(50,p1,p2,en_pin)
 enter = raw_input("Press return to stop:")
-clockwise(60)
+clockwise(60,p1,p2,en_pin)
 enter = raw_input("Press return to stop:")
-clockwise(70)
+clockwise(70,p1,p2,en_pin)
 enter = raw_input("Press return to stop:")
-clockwise(80)
+clockwise(80,p1,p2,en_pin)
 enter = raw_input("Press return to stop:")
-clockwise(90)
+clockwise(90,p1,p2,en_pin)
 enter = raw_input("Press return to stop:")
-clockwise(100)
+clockwise(100,p1,p2,en_pin)
 enter = raw_input("Press return to stop:")
 p1.stop
 p2.stop
