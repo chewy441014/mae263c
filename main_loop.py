@@ -165,29 +165,95 @@ def getpose(key_d):
 	# return the joint space position of desired key
 	# return pose_desired
 	
-def control1(pos_d):
+def control1(pos_d,p1,p2,p3,p4,p5,p6,m1_en_pin,m2_en_pin,m3_en_pin):
 	# initialize the encoders
+	##################################################
+	#This is for motor3 control
+	##################################################
+	tolerance=0.01
+	r_pulley=0.0181102 #unit meters
+	pos_error3=100
+	while pos_error3>=tolerance:
+		pos_error3=pos_d[2]-countstorad(encoder3_count)*r_pulley
+		duty_cycle_3=60
+		if pos_error3>0:
+			counter_clockwise(duty_cycle_3, p5, p6, m3_en_pin)
+		elif pos_error3<0:
+			clockwise(duty_cycle_3,p5,p6,m3_en_pin)
+	##################################################
+	#This is for motor1 and motor2 control
+	##################################################
 	# set parameters of robot
-	a1,a2=
-	len_link1=
-	len_link2=
-	m_link1=
-	m_link2=
-	m_motor=
-	k_t=k_e=k=0.44
-	R=5.5#resistance
-	V=
-	# while error < tolerance
+	a1,a2=0.115,0.064
+	len_link1=0.07
+	len_link2=0.04
+	m_link1=0.005
+	m_link2=0.003
+	m_motor=0.06
+	k=0.048
+	R=3.6
+	V=5
+	K_p,K_d=2.5,1.5
+	tolerance=0.1
+	position_error=[100,100]
+	while max(position_error[0],position_error[1]) > tolerance
 		# get current position
+		pos_current=[countstorad(encoder1_count),countstorad(encoder2_count)]
+		ANGULAR_VELOCITY=[vel1,vel2]
 		# estimate g(q)
-		g_q=(m_link1*len_link1+m_motor*a1+m_link2*a1)*math.cos(JOINT_ANGLE_1)+m_link2*len_link2*math.cos(JOINT_ANGLE_1+JOINT_ANGLE_2)
+		g_q=[(m_link1*len_link1+m_motor*a1+m_link2*a1)*math.cos(pos_current[0])+\
+		m_link2*len_link2*math.cos(pos_current[0]+pos_current[1]),\
+		m_link2*len_link2*math.cos(pos_current[0]+pos_current[1])]
 		# calculate position error
+		position_error=[pos_d[0]-pos_current[0],pos_d[1]-pos_current[1]]
 		# u = PD control with gravity compensation
-		u=g_q+K_p*POSITION_ERROR-K_d*ANGULAR_VELOCITY
+		u=[g_q[0]+K_p*position_error[0]-K_d*ANGULAR_VELOCITY[0],\
+		g_q[1]+K_p*position_error[1]-K_d*ANGULAR_VELOCITY[1]]
+		for i in range(2): 
+			if u[i]>=0.08:
+				u[i]=0.08
+			elif u[i]<=-0.08:
+				u[i]=-0.08
+		
 		# duty = function(u)
-		V_d=R*u/k+k*ANGULAR_VELOCITY
-		duty=V_d/V*100
+		V_d=[R*u[0]/k+k*ANGULAR_VELOCITY[0],R*u[1]/k+k*ANGULAR_VELOCITY[1]]
+		duty=[V_d[0]/V*100,V_d[1]/V*100]
+
 		# move the motors according to duty
+		#motor1 duty cycle ##############################
+		if duty[0]>0:
+			if duty[0]>=100:
+				duty[0]=100
+			elif duty[0]<=60:
+				duty[0]=0
+			clockwise(duty, p1, p2, m1_en_pin)
+		else:
+			if duty[0]<=-100:
+				duty[0]=100
+			elif duty[0]>=-60:
+				duty[0]=0
+			else:
+				duty[0]=-duty[0]
+			counter_clockwise(duty[0],p1,p2,m1_en_pin)
+		###################################################
+		#motor2 duty cycle ################################
+		if duty[1]>0:
+			if duty[1]>=100:
+				duty[1]=100
+			elif duty[1]<=60:
+				duty[1]=0
+			clockwise(duty, p3, p4, m2_en_pin)
+		else:
+			if duty[1]<=-100:
+				duty[1]=100
+			elif duty[1]>=-60:
+				duty[1]=0
+			else:
+				duty[1]=-duty[1]
+			counter_clockwise(duty[1],p3,p4,m2_en_pin)
+		####################################################
+		
+
 
 def taskcontrol(string_d):
 	# for each key in string_desired
@@ -195,6 +261,5 @@ def taskcontrol(string_d):
 		# control(pose_desired)
 		# control(intermediate home position)
 	# end for loop
-	# return to global home position
-
+	# return to global home position;
 def setparameter():
