@@ -401,7 +401,7 @@ def control1(pos_d):
 
 def taskcontrol(command_list):
 	n = len(command_list)
-	for i in xrange(0,n-1)
+	for i in xrange(0,n-1):
 	# for each key in string_desired
 		# get position
 		current_pos = [countstorad(encoder1_count), countstorad(encoder2_count), countstorad(encoder3_count)]
