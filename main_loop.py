@@ -322,9 +322,7 @@ def invskinem(pose=[0,-.1,0]):
 def keypose(read):
 	if read in keydic:
 		output=keydic.get(read)
-		print(output)
 		output = [float(output[0])/1000, float(output[1])/1000, float(output[2])/1000]
-		print(output)
 		return output
 	else:
 		print('Whoops! No keys found!')
@@ -421,6 +419,7 @@ def taskcontrol(command_list):
 		current_pos = [countstorad(encoder1_count), countstorad(encoder2_count), countstorad(encoder3_count)]
 		# get nearest home position (theta 1 is arbitrary)
 		nearest_home = [current_pos[0], 0, -math.pi/2]
+		print(current_pos)
 		if (current_pos[1] != nearest_home[1]) or (current_pos[2] != nearest_home[2]):
 			print("Going to nearest home")
 			#control1(nearest_home)
