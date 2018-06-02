@@ -325,7 +325,9 @@ def keypose(read):
 	if read in keydic:
 		output=keydic.get(read)
 		print(output)
-		return [float(output[0])/1000, float(output[1])/1000, float(output[2])/1000]
+		output = [float(output[0])/1000, float(output[1])/1000, float(output[2])/1000]
+		print(output)
+		return output
 	else:
 		print('Whoops! No keys found!')
 	return
