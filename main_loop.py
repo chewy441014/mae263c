@@ -384,7 +384,7 @@ def control1(pos_d):
 		else:
 			if duty[1]<=-100:
 				duty[1]=0
-			elif duty[1]>-100 and duty[1]<=-55：
+			elif duty[1] > -100 and duty[1] <= -55:
 				duty[1]=100+duty[1]
 			elif duty[1]>-55:
 				duty[1]=50
