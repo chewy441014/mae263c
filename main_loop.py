@@ -216,6 +216,10 @@ def countstorad(count):
 	# returns the joints space angle in radians
 	rad = 2*math.pi*count/8/kr
 	return rad	
+
+def radtocount(rad):
+	count = kr*8/(2*math.pi)
+	return count
 	
 def initializeEncoders():
 	global encoder2_count, encoder3_count
@@ -226,7 +230,7 @@ def resetEncoders():
 	global encoder1_count, encoder2_count, encoder3_count
 	encoder1_count = 0
 	encoder2_count = 0
-	encoder3_count = -math.pi/2
+	encoder3_count = radtocount(-math.pi/2)
 
 def encoder1Callback(channel):
 	# this function is called when an encoder reading is detected
