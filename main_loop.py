@@ -507,6 +507,20 @@ def test2():
 		t += 1
 	p1.stop()
 	p2.stop()
+	enter = raw_input("Ready?")
+	print("Test the connection and direction of each motor and encoder")
+	print("Motor 1 : counterclockwise")
+	clockwise(100-26,p3,p4,m2_en_pin)
+	t = 0
+	while t < 20:
+		print("Velocity")
+		print(vel2)
+		print("Joint Position")
+		print(countstorad(encoder2_count))
+		time.sleep(1)
+		t += 1
+	p1.stop()
+	p2.stop()
 
 test2()
 io.cleanup()
