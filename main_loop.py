@@ -330,7 +330,7 @@ def control1(pos_d):
 	#This is for motor2 and motor3 control
 	##################################################
 	position_error=[100,100]
-	while max(position_error[0],position_error[1]) > tolerance
+	while max(position_error[0],position_error[1]) > tolerance:
 		# get current position
 		pos_current=[countstorad(encoder2_count),countstorad(encoder3_count)]
 		angular_velocity=[vel2,vel3]
