@@ -477,3 +477,5 @@ def test1():
 	print(VEL1)
 	print(VEL2)
 	print(VEL3)
+	
+test1()
