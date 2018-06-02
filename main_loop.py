@@ -365,6 +365,7 @@ def control1(pos_d):
 			clockwise(duty[0], p3, p4, m2_en_pin)
 		else:
 			test = (duty[0] > -100) and (duty[0] <= -55)
+			print(test)
 			if duty[0]<=-100:
 				duty[0]=0
 			#elif test：
@@ -381,10 +382,11 @@ def control1(pos_d):
 				duty[1]=50
 			clockwise(duty[1], p5, p6, m3_en_pin)
 		else:
+			test2 = duty[1]>-100 and duty[1]<=-55
 			if duty[1]<=-100:
 				duty[1]=0
-			elif duty[1]>-100 and duty[1]<=-55：
-				duty[1]=100+duty[1]
+			#elif test：
+				#duty[1]=100+duty[1]
 			elif duty[1]>-55:
 				duty[1]=50
 			clockwise(duty[1],p5,p6,m3_en_pin)
