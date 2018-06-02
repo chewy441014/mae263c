@@ -310,7 +310,7 @@ def keypose(read):
         return [output[0]/1000, output[1]/1000, output[2]/1000]
     else:
         print('Whoops! No keys found!')
-		return
+	return
 	
 def control1(pos_d):
 	# initialize the encoders
