@@ -218,7 +218,7 @@ def countstorad(count):
 	return rad	
 
 def radtocount(rad):
-	count = kr*8/(2*math.pi)
+	count = rad*kr*8/(2*math.pi)
 	return count
 	
 def initializeEncoders():
