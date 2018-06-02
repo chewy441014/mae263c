@@ -323,7 +323,7 @@ def invskinem(pose=[0,-.1,0]):
 	 
 def keypose(read):
 	if read in keydic:
-		output=keydic.get(read)
+		output=float(keydic.get(read))
 		print(output)
 		return [output[0]/1000, output[1]/1000, output[2]/1000]
 	else:
