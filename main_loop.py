@@ -242,11 +242,11 @@ def encoder1Callback(channel):
 		B = 0
 	if A != A1_old:
 		if A != B:
-			encoder1_count -= 1
-			vel1_vec.insert(0,-enc_res/(A1_t2 - A1_t1))
-		else:
 			encoder1_count += 1
 			vel1_vec.insert(0,enc_res/(A1_t2 - A1_t1))
+		else:
+			encoder1_count -= 1
+			vel1_vec.insert(0,-enc_res/(A1_t2 - A1_t1))
 	if len(vel1_vec) > num_samples:
 		vel1_vec.pop()
 	vel1 = sum(vel1_vec)/len(vel1_vec)
@@ -294,11 +294,11 @@ def encoder3Callback(channel):
 		B = 0
 	if A != A3_old:
 		if A != B:
-			encoder3_count -= 1
-			vel3_vec.insert(0,-enc_res/(A3_t2 - A3_t1))
-		else:
 			encoder3_count += 1
 			vel3_vec.insert(0,enc_res/(A3_t2 - A3_t1))
+		else:
+			encoder3_count -= 1
+			vel3_vec.insert(0,-enc_res/(A3_t2 - A3_t1))
 	if len(vel3_vec) > num_samples:
 		vel3_vec.pop()
 	vel3 = sum(vel3_vec)/len(vel3_vec)
@@ -448,24 +448,24 @@ def taskcontrol(command_list):
 def test1():
 	resetEncoders()
 	print("Test the connection and direction of each motor and encoder")
-	print("Motor 1 : clockwise")
-	clockwise(100,p1,p2,m1_en_pin)
+	print("Motor 1 : Cclockwise")
+	clockwise(0,p1,p2,m1_en_pin)
 	time.sleep(0.2)
 	p1.stop()
 	p2.stop()
-	m1 = raw_input("Did the motor turn clockwise? (y/n)")
-	print("Motor 2 : clockwise")
-	clockwise(100,p3,p4,m2_en_pin)
+	m1 = raw_input("Did the motor turn Cclockwise? (y/n)")
+	print("Motor 2 : Cclockwise")
+	clockwise(0,p3,p4,m2_en_pin)
 	time.sleep(0.2)
 	p3.stop()
 	p4.stop()
-	m2 = raw_input("Did the motor turn clockwise? (y/n)")
-	print("Motor 3 : clockwise")
-	clockwise(100, p5, p6, m3_en_pin)
+	m2 = raw_input("Did the motor turn Cclockwise? (y/n)")
+	print("Motor 3 : Cclockwise")
+	clockwise(0, p5, p6, m3_en_pin)
 	time.sleep(0.2)
 	p5.stop()
 	p6.stop()
-	m3 = raw_input("Did the motor turn clockwise? (y/n)")
+	m3 = raw_input("Did the motor turn Cclockwise? (y/n)")
 	pose = [countstorad(encoder1_count), countstorad(encoder2_count), countstorad(encoder2_count)]
 	print("Position according to encoders, should all be the same sign (and relative magnitude)")
 	print(pose)
