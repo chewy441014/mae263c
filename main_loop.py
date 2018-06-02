@@ -267,7 +267,7 @@ def encoder2Callback(channel):
 			encoder2_count -= 1
 			vel2 = -enc_res/(A2_t2 - A2_t1)
 	A2_old = A
-	A2_t1 = A1_t2
+	A2_t1 = A2_t2
 io.add_event_detect(en3_pin, io.BOTH, callback=encoder2Callback)
 
 def encoder3Callback(channel):
