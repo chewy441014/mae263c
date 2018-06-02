@@ -364,12 +364,12 @@ def control1(pos_d):
 				duty[0]=50
 			clockwise(duty[0], p3, p4, m2_en_pin)
 		else:
-			test = (duty[0] > -100) and (duty[0] <= -55)
+			test = 
 			print(test)
 			if duty[0]<=-100:
 				duty[0]=0
-			#elif test：
-				#duty[0]=100+duty[0]
+			elif duty[0] > -100 and duty[0] <= -55:
+				duty[0]=100+duty[0]
 			elif duty[0]>-55:
 				duty[0]=50
 			clockwise(duty[0],p3,p4,m2_en_pin)
