@@ -10,6 +10,7 @@ hz = 50
 dt = 1/hz
 kr = 48
 enc_res = 0.01636246
+num_samples = 100
 special_words = ['BackSpace', 'Tab', 'Enter', 'Cap', 'Shift2', 'Ctrl1', 
 	'WIN1', 'Alt1', 'Alt2', 'WIN2', 'MClick', 'Ctrl2', 'Shift1', '\\']
 L1=0.115 # m
@@ -165,6 +166,7 @@ A1_old = 0
 encoder1_count = 0
 A1_t1 = time.time()
 vel1 = 0
+vel1_vec = []
 
 # sensor 3
 en3_pin = 31
@@ -180,6 +182,7 @@ A2_old = 0
 encoder2_count = 0
 A2_t1 = time.time()
 vel2 = 0
+vel2_vec = []
 
 # sensor 5
 en5_pin = 15
@@ -195,6 +198,7 @@ A3_old = 0
 encoder3_count = 0
 A3_t1 = time.time()
 vel3 = 0
+vel3_vec = []
 
 def clockwise(duty, pwm1, pwm2, en_pin):
 	io.output(en_pin, io.HIGH)
@@ -226,7 +230,7 @@ def resetEncoders():
 
 def encoder1Callback(channel):
 	# this function is called when an encoder reading is detected
-	global A1_old, encoder1_count, A1_t1, vel1
+	global A1_old, encoder1_count, A1_t1, vel1, vel1_vec
 	A1_t2 = time.time()
 	if io.input(channel):
 		A = 1
@@ -236,27 +240,23 @@ def encoder1Callback(channel):
 		B = 1
 	else:
 		B = 0
-	if abs(vel1) > 0.1:
-		if vel1 < 0:
-			vel1 = -enc_res/(A1_t2 - A1_t1)
-		elif vel1 > 0:
-			vel1 = enc_res/(A1_t2 - A1_t1)
 	if A != A1_old:
 		if A != B:
 			encoder1_count -= 1
-			if vel1 == 0:
-				vel1 = -enc_res/(A1_t2 - A1_t1)
+			vel1_vec.insert(0,-enc_res/(A1_t2 - A1_t1))
 		else:
 			encoder1_count += 1
-			if vel1 == 0:
-				vel1 = enc_res/(A1_t2 - A1_t1)
+			vel1_vec.insert(0,enc_res/(A1_t2 - A1_t1))
+	if len(vel1_vec) > num_samples:
+		vel1_vec.pop()
+	vel1 = sum(vel1_vec)/len(vel1_vec)
 	A1_old = A
 	A1_t1 = A1_t2
 io.add_event_detect(en1_pin, io.BOTH, callback=encoder1Callback)
 	
 def encoder2Callback(channel):
 	# this function is called when an encoder reading is detected
-	global A2_old, encoder2_count, A2_t1, vel2
+	global A2_old, encoder2_count, A2_t1, vel2, vel2_vec
 	A2_t2 = time.time()
 	if io.input(channel):
 		A = 1
@@ -266,27 +266,23 @@ def encoder2Callback(channel):
 		B = 1
 	else:
 		B = 0
-	if abs(vel2) > 0.1:
-		if vel2 < 0:
-			vel2 = -enc_res/(A2_t2 - A2_t1)
-		elif vel2 > 0:
-			vel2 = enc_res/(A2_t2 - A2_t1)
 	if A != A2_old:
 		if A != B:
 			encoder2_count -= 1
-			if vel2 == 0:
-				vel2 = -enc_res/(A2_t2 - A2_t1)
+			vel2_vec.insert(0,-enc_res/(A2_t2 - A2_t1))
 		else:
 			encoder2_count += 1
-			if vel2 == 0:
-				vel2 = enc_res/(A2_t2 - A2_t1)
+			vel2_vec.insert(0,enc_res/(A2_t2 - A2_t1))
+	if len(vel2_vec) > num_samples:
+		vel2_vec.pop()
+	vel2 = sum(vel2_vec)/len(vel2_vec)
 	A2_old = A
 	A2_t1 = A2_t2
 io.add_event_detect(en3_pin, io.BOTH, callback=encoder2Callback)
 
 def encoder3Callback(channel):
 	# this function is called when an encoder reading is detected
-	global A3_old, encoder3_count, A3_t1, vel3
+	global A3_old, encoder3_count, A3_t1, vel3, vel3_vec
 	A3_t2 = time.time()
 	if io.input(channel):
 		A = 1
@@ -296,20 +292,16 @@ def encoder3Callback(channel):
 		B = 1
 	else:
 		B = 0
-	if abs(vel3) > 0.1:
-		if vel3 < 0:
-			vel3 = -enc_res/(A3_t2 - A3_t1)
-		elif vel3 > 0:
-			vel3 = enc_res/(A3_t2 - A3_t1)
 	if A != A3_old:
 		if A != B:
 			encoder3_count -= 1
-			if vel3 == 0:
-				vel3 = -enc_res/(A3_t2 - A3_t1)
+			vel3_vec.insert(0,-enc_res/(A3_t2 - A3_t1))
 		else:
 			encoder3_count += 1
-			if vel3 == 0:
-				vel3 = enc_res/(A3_t2 - A3_t1)
+			vel3_vec.insert(0,enc_res/(A3_t2 - A3_t1))
+	if len(vel3_vec) > num_samples:
+		vel3_vec.pop()
+	vel3 = sum(vel3_vec)/len(vel3_vec)
 	A3_old = A
 	A3_t1 = A3_t2
 io.add_event_detect(en5_pin, io.BOTH, callback=encoder3Callback)
