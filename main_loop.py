@@ -470,7 +470,7 @@ def test1():
 	if (b1 and b2 and b3) or ((not b1) and (not b2) and (not b3)):
 		print("All encoders read the same direction")
 		CW = raw_input("Was it positive for CW and negative for CCW? (y/n)")
-	else
+	else:
 		print("Not all encoders read the same direction")
 		print("Encoder 1 thought the rotation was CW: "+str(b1))
 		print("Encoder 2 thought the rotation was CW: "+str(b2))
