@@ -307,19 +307,19 @@ def encoder3Callback(channel):
 io.add_event_detect(en5_pin, io.BOTH, callback=encoder3Callback)
 
 def invskinem(pose=[0,-.1,0]):
-	 for i in range(3):
+	for i in range(3):
 		pose[i] = pose[i]*1000
-     d1=pose[2]/(r_pulley)
-     c3=float ((pose[0]-a1)**2+pose[1]**2-L1**2-L2**2)/(2*L1*L2)
-     try:
-         s3=-math.sqrt(1-c3**2)
-     except:
-         print('Whoops!')
-         return
-     th3=math.atan2(s3,c3)
-     k=((pose[0]-a1)**2+L1**2+pose[1]**2-L2**2)/(2*L1)
-     th2=math.atan2(math.sqrt((pose[0]-a1)**2+pose[1]**2-k**2),k)+math.atan2(pose[1],pose[0]-a1)
-     return [d1,th2,th3]
+	d1=pose[2]/(r_pulley)
+	c3=float ((pose[0]-a1)**2+pose[1]**2-L1**2-L2**2)/(2*L1*L2)
+	try:
+		s3=-math.sqrt(1-c3**2)
+	except:
+		print('Whoops!')
+		return
+	th3=math.atan2(s3,c3)
+	k=((pose[0]-a1)**2+L1**2+pose[1]**2-L2**2)/(2*L1)
+	th2=math.atan2(math.sqrt((pose[0]-a1)**2+pose[1]**2-k**2),k)+math.atan2(pose[1],pose[0]-a1)
+	return [d1,th2,th3]
 	 
 def keypose(read):
     if read in keydic:
