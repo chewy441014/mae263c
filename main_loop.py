@@ -236,7 +236,7 @@ def encoder1Callback(channel):
 		B = 1
 	else:
 		B = 0
-	if abs(vel1) > 1:
+	if abs(vel1) > 0.1:
 		if vel1 < 0:
 			vel1 = -enc_res/(A1_t2 - A1_t1)
 		elif vel1 > 0:
@@ -266,7 +266,7 @@ def encoder2Callback(channel):
 		B = 1
 	else:
 		B = 0
-	if abs(vel2) > 1:
+	if abs(vel2) > 0.1:
 		if vel2 < 0:
 			vel2 = -enc_res/(A2_t2 - A2_t1)
 		elif vel2 > 0:
@@ -296,7 +296,7 @@ def encoder3Callback(channel):
 		B = 1
 	else:
 		B = 0
-	if abs(vel3) > 1:
+	if abs(vel3) > 0.1:
 		if vel3 < 0:
 			vel3 = -enc_res/(A3_t2 - A3_t1)
 		elif vel3 > 0:
@@ -504,7 +504,7 @@ def test2():
 	enter = raw_input("Ready?")
 	print("Test the connection and direction of each motor and encoder")
 	print("Motor 1 : counterclockwise")
-	clockwise(28,p3,p4,m2_en_pin)
+	clockwise(26,p3,p4,m2_en_pin)
 	t = 0
 	while t < 20:
 		print("Velocity")
