@@ -425,3 +425,52 @@ def taskcontrol(command_list):
 	print("Going to Absolute Home Position")
 	control1(abs_home)
 
+def test1():
+	resetEncoders()
+	print("Test the connection and direction of each motor and encoder")
+	print("Motor 1 : clockwise")
+	clockwise(60,p1,p2,m1_en_pin)
+	VEL1 = vel1
+	time.sleep(0.05)
+	p1.stop()
+	p2.stop()
+	m1 = raw_input("Did the motor turn clockwise? (y/n)")
+	print("Motor 2 : clockwise")
+	clockwise(60,p3,p4,m2_en_pin)
+	VEL2 = vel2
+	time.sleep(0.05)
+	p3.stop()
+	p4.stop()
+	m2 = raw_input("Did the motor turn clockwise? (y/n)")
+	print("Motor 3 : clockwise")
+	clockwise(60, p5, p6, m3_en_pin)
+	VEL3 = vel3
+	time.sleep(0.05)
+	p5.stop()
+	p6.stop()
+	m3 = raw_input("Did the motor turn clockwise? (y/n)")
+	pose = [countstorad(encoder1_count), countstorad(encoder2_count), countstorad(encoder2_count)]
+	print("Position according to encoders, should all be the same sign (and relative magnitude)")
+	print(pose)
+	if ((m1 == m2) and (m2 == m3)):
+		print('The motors rotated the same way')
+	else:
+		print("Not all motors rotated the same way")
+		print("Motor 1 rotated clockwise "+m1)
+		print("Motor 2 rotated clockwise "+m2)
+		print("Motor 3 rotated clockwise "+m3)
+	b1 = pose[0] > 0
+	b2 = pose[1] > 0
+	b3 = pose[2] > 0
+	if (b1 and b2 and b3) or ((not b1) and (not b2) and (not b3)):
+		print("All encoders read the same direction")
+		CW = raw_input("Was it positive for CW and negative for CCW? (y/n)")
+	else
+		print("Not all encoders read the same direction")
+		print("Encoder 1 thought the rotation was CW: "+str(b1))
+		print("Encoder 2 thought the rotation was CW: "+str(b2))
+		print("Encoder 3 thought the rotation was CW: "+str(b3))
+	print("Velocity read during test")
+	print(VEL1)
+	print(VEL2)
+	print(VEL3)
