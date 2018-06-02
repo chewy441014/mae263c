@@ -430,22 +430,22 @@ def test1():
 	print("Test the connection and direction of each motor and encoder")
 	print("Motor 1 : clockwise")
 	clockwise(60,p1,p2,m1_en_pin)
-	VEL1 = vel1
 	time.sleep(0.05)
+	VEL1 = vel1
 	p1.stop()
 	p2.stop()
 	m1 = raw_input("Did the motor turn clockwise? (y/n)")
 	print("Motor 2 : clockwise")
 	clockwise(60,p3,p4,m2_en_pin)
-	VEL2 = vel2
 	time.sleep(0.05)
+	VEL2 = vel2
 	p3.stop()
 	p4.stop()
 	m2 = raw_input("Did the motor turn clockwise? (y/n)")
 	print("Motor 3 : clockwise")
 	clockwise(60, p5, p6, m3_en_pin)
-	VEL3 = vel3
 	time.sleep(0.05)
+	VEL3 = vel3
 	p5.stop()
 	p6.stop()
 	m3 = raw_input("Did the motor turn clockwise? (y/n)")
