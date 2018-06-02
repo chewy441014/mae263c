@@ -431,27 +431,27 @@ def taskcontrol(command_list):
 def test1():
 	resetEncoders()
 	print("Test the connection and direction of each motor and encoder")
-	print("Motor 1 : clockwise")
-	clockwise(60,p1,p2,m1_en_pin)
-	time.sleep(0.05)
+	print("Motor 1 : counterclockwise")
+	clockwise(30,p1,p2,m1_en_pin)
+	time.sleep(0.2)
 	VEL1 = vel1
 	p1.stop()
 	p2.stop()
-	m1 = raw_input("Did the motor turn clockwise? (y/n)")
-	print("Motor 2 : clockwise")
-	clockwise(60,p3,p4,m2_en_pin)
-	time.sleep(0.05)
+	m1 = raw_input("Did the motor turn counterclockwise? (y/n)")
+	print("Motor 2 : counterclockwise")
+	clockwise(30,p3,p4,m2_en_pin)
+	time.sleep(0.2)
 	VEL2 = vel2
 	p3.stop()
 	p4.stop()
-	m2 = raw_input("Did the motor turn clockwise? (y/n)")
-	print("Motor 3 : clockwise")
-	clockwise(60, p5, p6, m3_en_pin)
-	time.sleep(0.05)
+	m2 = raw_input("Did the motor turn counterclockwise? (y/n)")
+	print("Motor 3 : counterclockwise")
+	clockwise(30, p5, p6, m3_en_pin)
+	time.sleep(0.2)
 	VEL3 = vel3
 	p5.stop()
 	p6.stop()
-	m3 = raw_input("Did the motor turn clockwise? (y/n)")
+	m3 = raw_input("Did the motor turn counterclockwise? (y/n)")
 	pose = [countstorad(encoder1_count), countstorad(encoder2_count), countstorad(encoder2_count)]
 	print("Position according to encoders, should all be the same sign (and relative magnitude)")
 	print(pose)
@@ -459,9 +459,9 @@ def test1():
 		print('The motors rotated the same way')
 	else:
 		print("Not all motors rotated the same way")
-		print("Motor 1 rotated clockwise "+m1)
-		print("Motor 2 rotated clockwise "+m2)
-		print("Motor 3 rotated clockwise "+m3)
+		print("Motor 1 rotated counterclockwise "+m1)
+		print("Motor 2 rotated counterclockwise "+m2)
+		print("Motor 3 rotated counterclockwise "+m3)
 	b1 = pose[0] > 0
 	b2 = pose[1] > 0
 	b3 = pose[2] > 0
