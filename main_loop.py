@@ -425,4 +425,3 @@ def taskcontrol(command_list):
 	print("Going to Absolute Home Position")
 	control1(abs_home)
 
-def setparameter():
