@@ -307,7 +307,7 @@ def encoder3Callback(channel):
 io.add_event_detect(en5_pin, io.BOTH, callback=encoder3Callback)
 
 def invskinem(pose=[0,-.1,0]):
-	d1=pose[2]/(r_pulley)
+    	d1=pose[2]/(r_pulley)
 	c3=float(((pose[0]-a1)**2+pose[1]**2-L1**2-L2**2)/(2*L1*L2))
 	try:
 		s3=-math.sqrt(1-c3**2)
@@ -341,9 +341,9 @@ def control1(pos_d):
 		pos_error1=pos_d[0]-countstorad(encoder1_count)
 		duty_cycle_1=60
 		if pos_error1>0:
-			counter_clockwise(duty_cycle_1, p1, p2, m1_en_pin)
+			clockwise(duty_cycle_1, p1, p2, m1_en_pin)
 		elif pos_error1<0:
-			clockwise(duty_cycle_1,p1,p2,m1_en_pin)
+			counter_clockwise(duty_cycle_1,p1,p2,m1_en_pin)
 	##################################################
 	#This is for motor2 and motor3 control
 	##################################################
