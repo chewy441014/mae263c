@@ -426,7 +426,7 @@ def taskcontrol(command_list):
 		print(current_pos)
 		if (current_pos[1] != nearest_home[1]) or (current_pos[2] != nearest_home[2]):
 			print("Going to nearest home")
-			#control1(nearest_home)
+			control1(nearest_home)
 			print("I'm Home!")
 			time.sleep(1)
 		cart_pos_d = keypose(command_list[i])
@@ -438,10 +438,10 @@ def taskcontrol(command_list):
 		print(cart_pos_d)
 		print("Joint Space Coordinates")
 		print(joint_pos_d)
-		#control1(joint_pos_d)
+		control1(joint_pos_d)
 		print("Motion Complete!")
 		time.sleep(1)
-		# control(pose_desired)
+		control(pose_desired)
 	# end for loop
 	abs_home = [0, 0, -math.pi/2]
 	# return to global home position
