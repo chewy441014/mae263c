@@ -238,11 +238,11 @@ def encoder1Callback(channel):
 		B = 0
 	if A != A1_old:
 		if A != B:
-			encoder1_count += 1
-			vel1 = enc_res/(A1_t2 - A1_t1)
-		else:
 			encoder1_count -= 1
 			vel1 = -enc_res/(A1_t2 - A1_t1)
+		else:
+			encoder1_count += 1
+			vel1 = +enc_res/(A1_t2 - A1_t1)
 	A1_old = A
 	A1_t1 = A1_t2
 io.add_event_detect(en1_pin, io.BOTH, callback=encoder1Callback)
@@ -261,11 +261,11 @@ def encoder2Callback(channel):
 		B = 0
 	if A != A2_old:
 		if A != B:
-			encoder2_count += 1
-			vel2 = enc_res/(A2_t2 - A2_t1)
-		else:
 			encoder2_count -= 1
 			vel2 = -enc_res/(A2_t2 - A2_t1)
+		else:
+			encoder2_count += 1
+			vel2 = enc_res/(A2_t2 - A2_t1)
 	A2_old = A
 	A2_t1 = A2_t2
 io.add_event_detect(en3_pin, io.BOTH, callback=encoder2Callback)
@@ -284,11 +284,11 @@ def encoder3Callback(channel):
 		B = 0
 	if A != A3_old:
 		if A != B:
-			encoder3_count += 1
-			vel3 = enc_res/(A3_t2 - A3_t1)
-		else:
 			encoder3_count -= 1
 			vel3 = -enc_res/(A3_t2 - A3_t1)
+		else:
+			encoder3_count += 1
+			vel3 = enc_res/(A3_t2 - A3_t1)
 	A3_old = A
 	A3_t1 = A3_t2
 io.add_event_detect(en5_pin, io.BOTH, callback=encoder3Callback)
@@ -478,4 +478,16 @@ def test1():
 	print(VEL2)
 	print(VEL3)
 	
-test1()
+def test2():
+	resetEncoders()
+	enter = raw_input("Ready?")
+	print("Test the connection and direction of each motor and encoder")
+	print("Motor 1 : counterclockwise")
+	clockwise(10,p1,p2,m1_en_pin)
+	time.sleep(0.2)
+	VEL1 = vel1
+	p1.stop()
+	p2.stop()
+	m1 = raw_input("Did the motor turn counterclockwise? (y/n)")
+
+test2()
