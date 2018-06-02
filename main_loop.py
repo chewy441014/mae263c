@@ -407,7 +407,7 @@ def taskcontrol(command_list):
 		current_pos = [countstorad(encoder1_count), countstorad(encoder2_count), countstorad(encoder3_count)]
 		# get nearest home position (theta 1 is arbitrary)
 		nearest_home = [current_pos[0], 0, -math.pi/2]
-		if (current_pos[1] != nearest_home[1]) or (current_pos[2] != nearest_home[2])
+		if (current_pos[1] != nearest_home[1]) or (current_pos[2] != nearest_home[2]):
 			control1(nearest_home)
 			print("I'm Home!")
 			time.sleep(1)
