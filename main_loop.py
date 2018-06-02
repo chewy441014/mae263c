@@ -412,14 +412,15 @@ def control1(pos_d):
 
 def taskcontrol(command_list):
 	n = len(command_list)
-	for i in xrange(0,n-1):
+	for i in xrange(0,n):
 	# for each key in string_desired
 		# get position
 		current_pos = [countstorad(encoder1_count), countstorad(encoder2_count), countstorad(encoder3_count)]
 		# get nearest home position (theta 1 is arbitrary)
 		nearest_home = [current_pos[0], 0, -math.pi/2]
 		if (current_pos[1] != nearest_home[1]) or (current_pos[2] != nearest_home[2]):
-			control1(nearest_home)
+			print("Going to nearest home")
+			#control1(nearest_home)
 			print("I'm Home!")
 			time.sleep(1)
 		cart_pos_d = keypose(command_list[i])
@@ -431,7 +432,7 @@ def taskcontrol(command_list):
 		print(cart_pos_d)
 		print("Joint Space Coordinates")
 		print(joint_pos_d)
-		control1(joint_pos_d)
+		#control1(joint_pos_d)
 		print("Motion Complete!")
 		time.sleep(1)
 		# control(pose_desired)
@@ -439,7 +440,7 @@ def taskcontrol(command_list):
 	abs_home = [0, 0, -math.pi/2]
 	# return to global home position
 	print("Going to Absolute Home Position")
-	control1(abs_home)
+	#control1(abs_home)
 
 def test1():
 	resetEncoders()
@@ -522,5 +523,10 @@ def test2():
 	p1.stop()
 	p2.stop()
 
-test2()
+enter = raw_input("Ready??")
+print("GO!!!")
+resetEncoders()
+command_list = ['g']
+taskcontrol(command_list)
 io.cleanup()
+print("Task Complete")
