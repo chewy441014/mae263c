@@ -322,12 +322,12 @@ def invskinem(pose=[0,-.1,0]):
 	return [d1,th2,th3]
 	 
 def keypose(read):
-    if read in keydic:
-        output=keydic.get(read)
+	if read in keydic:
+		output=keydic.get(read)
 		print(output)
-        return [output[0]/1000, output[1]/1000, output[2]/1000]
-    else:
-        print('Whoops! No keys found!')
+		return [output[0]/1000, output[1]/1000, output[2]/1000]
+	else:
+		print('Whoops! No keys found!')
 	return
 	
 def control1(pos_d):
