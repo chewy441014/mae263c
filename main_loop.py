@@ -358,15 +358,15 @@ def control1(pos_d):
 		if duty[0]>0:
 			if duty[0]>=100:
 				duty[0]=100
-			elif duty[0]<=60:
+			elif duty[0]<=55:
 				duty[0]=50
 			clockwise(duty[0], p3, p4, m2_en_pin)
 		else:
 			if duty[0]<=-100:
 				duty[0]=0
-			elif duty[0]>-100 and duty[0]<=-60：
+			elif duty[0]>-100 and duty[0]<=-55：
 				duty[0]=100+duty[0]
-			elif duty[0]>-60:
+			elif duty[0]>-55:
 				duty[0]=50
 			clockwise(duty[0],p3,p4,m2_en_pin)
 		###################################################
@@ -374,15 +374,15 @@ def control1(pos_d):
 		if duty[1]>0:
 			if duty[1]>=100:
 				duty[1]=100
-			elif duty[1]<=60:
+			elif duty[1]<=55:
 				duty[1]=50
 			clockwise(duty[1], p5, p6, m3_en_pin)
 		else:
 			if duty[1]<=-100:
 				duty[1]=0
-			elif duty[1]>-100 and duty[1]<=-60：
+			elif duty[1]>-100 and duty[1]<=-55：
 				duty[1]=100+duty[1]
-			elif duty[1]>-60:
+			elif duty[1]>-55:
 				duty[1]=50
 			clockwise(duty[1],p5,p6,m3_en_pin)
 		####################################################
