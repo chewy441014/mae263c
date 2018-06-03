@@ -504,14 +504,14 @@ def control1(pos_d):
 		io.cleanup()
 
 def control2(pos_d):
-    	try:
+		try:
 		# initialize the encoders
 		##################################################
 		#This is for motor1 control
 		##################################################
 		tolerance=0.005
 		pos_error1=100
-        enter = raw_input(" About to move motor 2")
+		enter = raw_input("About to move motor 2")
 		print("Controlling Motors 2")
 		position_error=100
 		duty_cycle_2=100
@@ -525,7 +525,7 @@ def control2(pos_d):
 			elif position_error>0:
 				clockwise(duty_cycle_2, p3, p4, m2_en_pin)
 
-        enter = raw_input(" About to move motor 3")
+		enter = raw_input(" About to move motor 3")
 		print("Controlling Motors 3")
 		position_error=100
 		duty_cycle_3=100
