@@ -462,9 +462,9 @@ def control1(pos_d):
 			# get position error
 			position_error=pos_d[1]-pos_current
 			if position_error<0:
-				clockwise(duty_cycle_2, p3, p4, m2_en_pin)
-			elif position_error>0:
 				clockwise(100-duty_cycle_2, p3, p4, m2_en_pin)
+			elif position_error>0:
+				clockwise(duty_cycle_2, p3, p4, m2_en_pin)
 		print("Current Position [rad]")
 		print([countstorad(encoder1_count),countstorad(encoder2_count),countstorad(encoder3_count)])
 		p1.stop()
