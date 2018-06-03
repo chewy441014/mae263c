@@ -18,7 +18,8 @@ L2=0.064 # m
 a1=0.018 # m
 
 # mm units converted at output of keypose
-a0=50 # mm 
+off = 56 # mm
+a0=50+off # mm 
 zz=24 # mm
 zs=float (19) #mm
 yy=18 #mm
