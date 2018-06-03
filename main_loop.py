@@ -444,9 +444,9 @@ def control1(pos_d):
 			# get position error
 			position_error=pos_d[2]-pos_current
 			if position_error<0:
-				clockwise(100-duty_cycle_3, p5, p6, m3_en_pin)
-			elif position_error>0:
 				clockwise(duty_cycle_3, p5, p6, m3_en_pin)
+			elif position_error>0:
+				clockwise(100-duty_cycle_3, p5, p6, m3_en_pin)
 		print("Current Position [rad]")
 		print([countstorad(encoder1_count),countstorad(encoder2_count),countstorad(encoder3_count)])
 		p5.stop()
@@ -566,7 +566,7 @@ def test2():
 	print("Motor 3 : counterclockwise")
 	clockwise(100,p5,p6,m3_en_pin)
 	t = 0
-	while t < 20:
+	while t < 10:
 		print("Velocity")
 		print(vel2)
 		print("Joint Position")
@@ -577,7 +577,7 @@ def test2():
 	p6.stop()
 	clockwise(0,p5,p6,m3_en_pin)
 	t = 0
-	while t < 20:
+	while t < 10:
 		print("Velocity")
 		print(vel2)
 		print("Joint Position")
