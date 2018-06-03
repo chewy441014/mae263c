@@ -588,10 +588,10 @@ def test2():
 	p6.stop()
 
 enter = raw_input("Ready??")
-#print("GO!!!")
-#resetEncoders()
-#command_list = ['g']
-#taskcontrol(command_list)
-test2()
+print("GO!!!")
+resetEncoders()
+command_list = ['g']
+taskcontrol(command_list)
+#test2()
 io.cleanup()
 print("Task Complete")
