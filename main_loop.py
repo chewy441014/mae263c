@@ -360,7 +360,7 @@ def control1(pos_d):
 		print(measure1_2)
 		print("")
 		print("Change DUE TO INERTIA?!")
-		print([measure1_1[0] - measure1_2[0], measure1_1[1] - measure1_2[1], measure1_1[2] - measure1_2[2])
+		print([measure1_1[0] - measure1_2[0], measure1_1[1] - measure1_2[1], measure1_1[2] - measure1_2[2]])
 		##################################################
 		#This is for motor2 and motor3 control
 		##################################################
@@ -464,7 +464,7 @@ def control1(pos_d):
 		print(measure2_2)
 		print("")
 		print("Change DUE TO INERTIA?!")
-		print([measure2_1[0] - measure2_2[0], measure2_1[1] - measure2_2[1], measure2_1[2] - measure2_2[2])
+		print([measure2_1[0] - measure2_2[0], measure2_1[1] - measure2_2[1], measure2_1[2] - measure2_2[2]])
 		enter = raw_input(" About to move motor 2")
 		print("Controlling Motors 2")
 		position_error=100
@@ -493,7 +493,7 @@ def control1(pos_d):
 		print(measure3_2)
 		print("")
 		print("Change DUE TO INERTIA?!")
-		print([measure3_1[0] - measure3_2[0], measure3_1[1] - measure3_2[1], measure3_1[2] - measure3_2[2])
+		print([measure3_1[0] - measure3_2[0], measure3_1[1] - measure3_2[1], measure3_1[2] - measure3_2[2]])
 	except KeyboardInterrupt:
 		p1.stop()
 		p2.stop()
