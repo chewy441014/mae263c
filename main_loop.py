@@ -272,11 +272,11 @@ def encoder2Callback(channel):
 		B = 0
 	if A != A2_old:
 		if A != B:
-			encoder2_count -= 1
-			vel2_vec.insert(0,-enc_res/(A2_t2 - A2_t1))
-		else:
 			encoder2_count += 1
 			vel2_vec.insert(0,enc_res/(A2_t2 - A2_t1))
+		else:
+			encoder2_count -= 1
+			vel2_vec.insert(0,-enc_res/(A2_t2 - A2_t1))
 	if len(vel2_vec) > num_samples:
 		vel2_vec.pop()
 	vel2 = sum(vel2_vec)/len(vel2_vec)
@@ -298,11 +298,11 @@ def encoder3Callback(channel):
 		B = 0
 	if A != A3_old:
 		if A != B:
-			encoder3_count += 1
-			vel3_vec.insert(0,enc_res/(A3_t2 - A3_t1))
-		else:
 			encoder3_count -= 1
 			vel3_vec.insert(0,-enc_res/(A3_t2 - A3_t1))
+		else:
+			encoder3_count += 1
+			vel3_vec.insert(0,enc_res/(A3_t2 - A3_t1))
 	if len(vel3_vec) > num_samples:
 		vel3_vec.pop()
 	vel3 = sum(vel3_vec)/len(vel3_vec)
@@ -347,7 +347,7 @@ def control1(pos_d):
 			if pos_error1>0:
 				clockwise(duty_cycle_1, p1, p2, m1_en_pin)
 			elif pos_error1<0:
-				counter_clockwise(duty_cycle_1,p1,p2,m1_en_pin)
+				clockwise(100-duty_cycle_1,p1,p2,m1_en_pin)
 		p1.stop()
 		p2.stop()
 		print("Current Position [rad]")
@@ -355,82 +355,114 @@ def control1(pos_d):
 		##################################################
 		#This is for motor2 and motor3 control
 		##################################################
-		print("Controlling Motors 2 and 3")
-		position_error=[100,100]
-		while max(abs(position_error[0]),abs(position_error[1])) > tolerance:
+#		print("Controlling Motors 2 and 3")
+#		position_error=[100,100]
+#		while max(abs(position_error[0]),abs(position_error[1])) > #tolerance:
+#			# get current position
+#			pos_current=[countstorad(encoder2_count),countstorad(encoder3_count)]
+#			angular_velocity=[vel2,vel3]
+#			# estimate g(q)
+#			g_q=[(m_link1*len_link1+m_motor*L1+m_link2*L1)*math.cos(pos_current[0])+\
+#			m_link2*len_link2*math.cos(pos_current[0]+pos_current[1]),\
+#			m_link2*len_link2*math.cos(pos_current[0]+pos_current[1])]
+#			# calculate position error
+#			if position_error[0] == 100:
+#				print("Desired Position")
+#				print([pos_d[1], pos_d[2]])
+#				print("")
+#			position_error=[pos_d[1]-pos_current[0],pos_d[2]-#pos_current[1]]
+#			print("Position Error")
+#			print(position_error)
+#			print("")
+#			# u = PD control with gravity compensation
+#			u=[g_q[0]+K_p*position_error[0]-K_d*angular_velocity[0],\
+#			g_q[1]+K_p*position_error[1]-K_d*angular_velocity[1]]
+#			for i in range(2):
+#				if u[i]>=0.08:
+#					u[i]=0.08
+#				elif u[i]<=-0.08:
+#					u[i]=-0.08
+#			
+#			# duty = function(u)
+#			V_d=[R*u[0]/k+k*angular_velocity[0],R*u[1]/k+k*#angular_velocity[1]]
+#			duty=[V_d[0]/V*100,V_d[1]/V*100]
+#			print("Duty (Before Saturation)")
+#			print(duty)
+#			print("")
+#			# move the motors according to duty
+#			#motor1 duty cycle ##############################
+#			if duty[0]>0:
+#				if duty[0]>=100:
+#					duty[0]=100
+#				elif duty[0]<=70:
+#					duty[0]=50
+#				clockwise(duty[0], p3, p4, m2_en_pin)
+#			else:
+#				if duty[0]<=-100:
+#					duty[0]=0
+#				elif duty[0] > -100 and duty[0] <= -70:
+#					duty[0]=100+duty[0]
+#				elif duty[0]>-70:
+#					duty[0]=50
+#				clockwise(duty[0],p3,p4,m2_en_pin)
+#			###################################################
+#			#motor2 duty cycle ################################
+#			if duty[1]>0:
+#				if duty[1]>=100:
+#					duty[1]=100
+#				elif duty[1]<=70:
+#					duty[1]=50
+#				clockwise(duty[1], p5, p6, m3_en_pin)
+#			else:
+#				if duty[1]<=-100:
+#					duty[1]=0
+#				elif duty[1] > -100 and duty[1] <= -70:
+#					duty[1]=100+duty[1]
+#				elif duty[1]>-70:
+#					duty[1]=50
+#				clockwise(duty[1],p5,p6,m3_en_pin)
+#			print("Duty (After Saturation)")
+#			print(duty)
+#			print("")
+#			print("Current Velocity")
+#			print(angular_velocity)
+#			print("")
+#			print("Current Position")
+#			print(pos_current)
+#			print("")
+#			####################################################
+		enter = raw_input(" About to move motor 3")
+		print("Controlling Motors 3")
+		position_error=100
+		duty_cycle_3=100
+		while abs(position_error) > tolerance:
 			# get current position
-			pos_current=[countstorad(encoder2_count),countstorad(encoder3_count)]
-			angular_velocity=[vel2,vel3]
-			# estimate g(q)
-			g_q=[(m_link1*len_link1+m_motor*L1+m_link2*L1)*math.cos(pos_current[0])+\
-			m_link2*len_link2*math.cos(pos_current[0]+pos_current[1]),\
-			m_link2*len_link2*math.cos(pos_current[0]+pos_current[1])]
-			# calculate position error
-			if position_error[0] == 100:
-				print("Desired Position")
-				print([pos_d[1], pos_d[2]])
-				print("")
-			position_error=[pos_d[1]-pos_current[0],pos_d[2]-pos_current[1]]
-			print("Position Error")
-			print(position_error)
-			print("")
-			# u = PD control with gravity compensation
-			u=[g_q[0]+K_p*position_error[0]-K_d*angular_velocity[0],\
-			g_q[1]+K_p*position_error[1]-K_d*angular_velocity[1]]
-			for i in range(2):
-				if u[i]>=0.08:
-					u[i]=0.08
-				elif u[i]<=-0.08:
-					u[i]=-0.08
-			
-			# duty = function(u)
-			V_d=[R*u[0]/k+k*angular_velocity[0],R*u[1]/k+k*angular_velocity[1]]
-			duty=[V_d[0]/V*100,V_d[1]/V*100]
-			print("Duty (Before Saturation)")
-			print(duty)
-			print("")
-			# move the motors according to duty
-			#motor1 duty cycle ##############################
-			if duty[0]>0:
-				if duty[0]>=100:
-					duty[0]=100
-				elif duty[0]<=70:
-					duty[0]=50
-				clockwise(duty[0], p3, p4, m2_en_pin)
-			else:
-				if duty[0]<=-100:
-					duty[0]=0
-				elif duty[0] > -100 and duty[0] <= -70:
-					duty[0]=100+duty[0]
-				elif duty[0]>-70:
-					duty[0]=50
-				clockwise(duty[0],p3,p4,m2_en_pin)
-			###################################################
-			#motor2 duty cycle ################################
-			if duty[1]>0:
-				if duty[1]>=100:
-					duty[1]=100
-				elif duty[1]<=70:
-					duty[1]=50
-				clockwise(duty[1], p5, p6, m3_en_pin)
-			else:
-				if duty[1]<=-100:
-					duty[1]=0
-				elif duty[1] > -100 and duty[1] <= -70:
-					duty[1]=100+duty[1]
-				elif duty[1]>-70:
-					duty[1]=50
-				clockwise(duty[1],p5,p6,m3_en_pin)
-			print("Duty (After Saturation)")
-			print(duty)
-			print("")
-			print("Current Velocity")
-			print(angular_velocity)
-			print("")
-			print("Current Position")
-			print(pos_current)
-			print("")
-			####################################################
+			pos_current=countstorad(encoder3_count)
+			# get position error
+			position_error=pos_d[2]-pos_current
+			if position_error[1]<0:
+				clockwise(duty_cycle_3, p5, p6, m3_en_pin)
+			elif position_error[1]>0:
+				clockwise(100-duty_cycle_3, p5, p6, m3_en_pin)
+		print("Current Position [rad]")
+		print([countstorad(encoder1_count),countstorad(encoder2_count),countstorad(encoder3_count)])
+		p5.stop()
+		p6.stop()
+		enter = raw_input(" About to move motor 2")
+		print("Controlling Motors 2")
+		position_error=100
+		duty_cycle_2=100
+		while abs(position_error) > tolerance:
+			# get current position
+			pos_current=countstorad(encoder2_count)
+			# get position error
+			position_error=pos_d[1]-pos_current
+			if position_error<0:
+				clockwise(duty_cycle_2, p3, p4, m2_en_pin)
+			elif position_error>0:
+				clockwise(100-duty_cycle_2, p3, p4, m2_en_pin)
+		print("Current Position [rad]")
+		print([countstorad(encoder1_count),countstorad(encoder2_count),countstorad(encoder3_count)])
 		p1.stop()
 		p2.stop()
 		p3.stop()
