@@ -341,7 +341,7 @@ def control1(pos_d):
 	pos_error1=100
 	while pos_error1>=tolerance:
 		pos_error1=pos_d[0]-countstorad(encoder1_count)
-		duty_cycle_1=60
+		duty_cycle_1=100
 		if pos_error1>0:
 			clockwise(duty_cycle_1, p1, p2, m1_en_pin)
 		elif pos_error1<0:
@@ -378,16 +378,16 @@ def control1(pos_d):
 		if duty[0]>0:
 			if duty[0]>=100:
 				duty[0]=100
-			elif duty[0]<=55:
+			elif duty[0]<=70:
 				duty[0]=50
 			clockwise(duty[0], p3, p4, m2_en_pin)
 		else:
 			print(test)
 			if duty[0]<=-100:
 				duty[0]=0
-			elif duty[0] > -100 and duty[0] <= -55:
+			elif duty[0] > -100 and duty[0] <= -70:
 				duty[0]=100+duty[0]
-			elif duty[0]>-55:
+			elif duty[0]>-70:
 				duty[0]=50
 			clockwise(duty[0],p3,p4,m2_en_pin)
 		###################################################
@@ -395,15 +395,15 @@ def control1(pos_d):
 		if duty[1]>0:
 			if duty[1]>=100:
 				duty[1]=100
-			elif duty[1]<=55:
+			elif duty[1]<=70:
 				duty[1]=50
 			clockwise(duty[1], p5, p6, m3_en_pin)
 		else:
 			if duty[1]<=-100:
 				duty[1]=0
-			elif duty[1] > -100 and duty[1] <= -55:
+			elif duty[1] > -100 and duty[1] <= -70:
 				duty[1]=100+duty[1]
-			elif duty[1]>-55:
+			elif duty[1]>-70:
 				duty[1]=50
 			clockwise(duty[1],p5,p6,m3_en_pin)
 		####################################################
