@@ -563,24 +563,35 @@ def test2():
 	resetEncoders()
 	enter = raw_input("Ready?")
 	print("Test the connection and direction of each motor and encoder")
-	print("Motor 1 : counterclockwise")
-	clockwise(100,p1,p2,m1_en_pin)
+	print("Motor 3 : counterclockwise")
+	clockwise(100,p5,p6,m3_en_pin)
 	t = 0
 	while t < 20:
 		print("Velocity")
 		print(vel2)
 		print("Joint Position")
-		print(countstorad(encoder1_count))
+		print(countstorad(encoder3_count))
 		time.sleep(1)
 		t += 1
-	p1.stop()
-	p2.stop()
+	p5.stop()
+	p6.stop()
+	clockwise(0,p5,p6,m3_en_pin)
+	t = 0
+	while t < 20:
+		print("Velocity")
+		print(vel2)
+		print("Joint Position")
+		print(countstorad(encoder3_count))
+		time.sleep(1)
+		t += 1
+	p5.stop()
+	p6.stop()
 
 enter = raw_input("Ready??")
-print("GO!!!")
-resetEncoders()
-command_list = ['g']
-taskcontrol(command_list)
-#test2()
+#print("GO!!!")
+#resetEncoders()
+#command_list = ['g']
+#taskcontrol(command_list)
+test2()
 io.cleanup()
 print("Task Complete")
