@@ -504,6 +504,7 @@ def control1(pos_d):
 		io.cleanup()
 		
 def correctEncoders(desired):
+	global encoder1_count, encoder2_count, encoder3_count
 	pos_correct = [radtocount(desired[0]), radtocount(desired[1]), radtocount(desired[2])]
 	encoder1_count = pos_correct[0]
 	encoder2_count = pos_correct[1]
