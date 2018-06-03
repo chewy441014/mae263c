@@ -273,11 +273,11 @@ def encoder2Callback(channel):
 		B = 0
 	if A != A2_old:
 		if A != B:
-			encoder2_count += 1
-			vel2_vec.insert(0,enc_res/(A2_t2 - A2_t1))
-		else:
 			encoder2_count -= 1
 			vel2_vec.insert(0,-enc_res/(A2_t2 - A2_t1))
+		else:
+			encoder2_count += 1
+			vel2_vec.insert(0,enc_res/(A2_t2 - A2_t1))
 	if len(vel2_vec) > num_samples:
 		vel2_vec.pop()
 	vel2 = sum(vel2_vec)/len(vel2_vec)
