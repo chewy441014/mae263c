@@ -241,12 +241,10 @@ def encoder1Callback(channel):
 		A = 1
 	else:
 		A = 0
-	print A
 	if io.input(encoder1_sensors[1]):
 		B = 1
 	else:
 		B = 0
-	print B
 	if A != A1_old:
 		if A != B:
 			encoder1_count += 1
