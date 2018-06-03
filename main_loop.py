@@ -349,11 +349,18 @@ def control1(pos_d):
 				clockwise(duty_cycle_1, p1, p2, m1_en_pin)
 			elif pos_error1<0:
 				clockwise(100-duty_cycle_1,p1,p2,m1_en_pin)
+		print("Current Position [rad]")
+		measure1_1 = [countstorad(encoder1_count),countstorad(encoder2_count),countstorad(encoder3_count)]
+		print(measure1_1)
 		p1.stop()
 		p2.stop()
 		time.sleep(2)
 		print("Current Position [rad]")
-		print([countstorad(encoder1_count),countstorad(encoder2_count),countstorad(encoder3_count)])
+		measure1_2 = [countstorad(encoder1_count),countstorad(encoder2_count),countstorad(encoder3_count)]
+		print(measure1_2)
+		print("")
+		print("Change DUE TO INERTIA?!")
+		print([measure1_1[0] - measure1_2[0], measure1_1[1] - measure1_2[1], measure1_1[2] - measure1_2[2])
 		##################################################
 		#This is for motor2 and motor3 control
 		##################################################
@@ -446,11 +453,18 @@ def control1(pos_d):
 				clockwise(duty_cycle_3, p5, p6, m3_en_pin)
 			elif position_error>0:
 				clockwise(100-duty_cycle_3, p5, p6, m3_en_pin)
+		print("Current Position [rad]")
+		measure2_1 = [countstorad(encoder1_count),countstorad(encoder2_count),countstorad(encoder3_count)]
+		print(measure2_1)
 		p5.stop()
 		p6.stop()
 		time.sleep(2)
 		print("Current Position [rad]")
-		print([countstorad(encoder1_count),countstorad(encoder2_count),countstorad(encoder3_count)])
+		measure2_2 = [countstorad(encoder1_count),countstorad(encoder2_count),countstorad(encoder3_count)]
+		print(measure2_2)
+		print("")
+		print("Change DUE TO INERTIA?!")
+		print([measure2_1[0] - measure2_2[0], measure2_1[1] - measure2_2[1], measure2_1[2] - measure2_2[2])
 		enter = raw_input(" About to move motor 2")
 		print("Controlling Motors 2")
 		position_error=100
@@ -464,6 +478,9 @@ def control1(pos_d):
 				clockwise(100-duty_cycle_2, p3, p4, m2_en_pin)
 			elif position_error>0:
 				clockwise(duty_cycle_2, p3, p4, m2_en_pin)
+		print("Current Position [rad]")
+		measure3_1 = [countstorad(encoder1_count),countstorad(encoder2_count),countstorad(encoder3_count)]
+		print(measure3_1)
 		p1.stop()
 		p2.stop()
 		p3.stop()
@@ -472,7 +489,11 @@ def control1(pos_d):
 		p6.stop()
 		time.sleep(2)
 		print("Current Position [rad]")
-		print([countstorad(encoder1_count),countstorad(encoder2_count),countstorad(encoder3_count)])
+		measure3_2 = [countstorad(encoder1_count),countstorad(encoder2_count),countstorad(encoder3_count)]
+		print(measure3_2)
+		print("")
+		print("Change DUE TO INERTIA?!")
+		print([measure3_1[0] - measure3_2[0], measure3_1[1] - measure3_2[1], measure3_1[2] - measure3_2[2])
 	except KeyboardInterrupt:
 		p1.stop()
 		p2.stop()
