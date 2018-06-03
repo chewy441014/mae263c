@@ -254,7 +254,7 @@ def encoder1Callback(channel):
 			vel1_vec.insert(0,-enc_res/(A1_t2 - A1_t1))
 	if len(vel1_vec) > num_samples:
 		vel1_vec.pop()
-	vel1 = sum(vel1_vec)/len(vel1_vec)
+	#vel1 = sum(vel1_vec)/len(vel1_vec)
 	A1_old = A
 	A1_t1 = A1_t2
 io.add_event_detect(en1_pin, io.BOTH, callback=encoder1Callback)
@@ -280,7 +280,7 @@ def encoder2Callback(channel):
 			vel2_vec.insert(0,enc_res/(A2_t2 - A2_t1))
 	if len(vel2_vec) > num_samples:
 		vel2_vec.pop()
-	vel2 = sum(vel2_vec)/len(vel2_vec)
+	#vel2 = sum(vel2_vec)/len(vel2_vec)
 	A2_old = A
 	A2_t1 = A2_t2
 io.add_event_detect(en3_pin, io.BOTH, callback=encoder2Callback)
@@ -306,7 +306,7 @@ def encoder3Callback(channel):
 			vel3_vec.insert(0,enc_res/(A3_t2 - A3_t1))
 	if len(vel3_vec) > num_samples:
 		vel3_vec.pop()
-	vel3 = sum(vel3_vec)/len(vel3_vec)
+	#vel3 = sum(vel3_vec)/len(vel3_vec)
 	A3_old = A
 	A3_t1 = A3_t2
 io.add_event_detect(en5_pin, io.BOTH, callback=encoder3Callback)
@@ -439,7 +439,6 @@ def control1(pos_d):
 		while abs(position_error) > tolerance:
 			# get current position
 			pos_current=countstorad(encoder3_count)
-			print(countstorad(encoder3_count))
 			# get position error
 			position_error=pos_d[2]-pos_current
 			if position_error<0:
