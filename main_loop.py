@@ -502,6 +502,12 @@ def control1(pos_d):
 		p5.stop()
 		p6.stop()
 		io.cleanup()
+		
+def correctEncoders(desired):
+	pos_correct = [radtocount(desired[0]), radtocount(desired[1]), radtocount(desired[2])]
+	encoder1_count = pos_correct[0]
+	encoder2_count = pos_correct[1]
+	encoder3_count = pos_correct[2]
 
 def taskcontrol(command_list):
 	n = len(command_list)
@@ -515,6 +521,7 @@ def taskcontrol(command_list):
 		if (current_pos[1] != nearest_home[1]) or (current_pos[2] != nearest_home[2]):
 			print("Going to nearest home")
 			control1(nearest_home)
+			correctEncoders(nearest_home)
 			print("I'm Home!")
 			time.sleep(1)
 		cart_pos_d = keypose(command_list[i])
@@ -528,6 +535,7 @@ def taskcontrol(command_list):
 		print(joint_pos_d)
 		print([countstorad(encoder1_count),countstorad(encoder2_count),countstorad(encoder3_count)])
 		control1(joint_pos_d)
+		correctEncoders(joint_pos_d)
 		print("Motion Complete!")
 		time.sleep(1)
 		# control(pose_desired)
@@ -536,6 +544,7 @@ def taskcontrol(command_list):
 	# return to global home position
 	print("Going to Absolute Home Position")
 	control1(abs_home)
+	correctEncoders(abs_home)
 
 def test1():
 	resetEncoders()
