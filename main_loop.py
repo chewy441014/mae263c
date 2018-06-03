@@ -356,7 +356,7 @@ def control1(pos_d):
 	##################################################
 	print("Controlling Motors 2 and 3")
 	position_error=[100,100]
-	while max(position_error[0],position_error[1]) > tolerance:
+	while max(abs(position_error[0]),abs(position_error[1])) > tolerance:
 		# get current position
 		pos_current=[countstorad(encoder2_count),countstorad(encoder3_count)]
 		angular_velocity=[vel2,vel3]
@@ -366,8 +366,15 @@ def control1(pos_d):
 		m_link2*len_link2*math.cos(pos_current[0]+pos_current[1])]
 		# calculate position error
 		if position_error[0] == 100:
-			print("You're in the matrix")
+			print("Position Error on First Loop")
 			print([pos_d[1]-pos_current[0],pos_d[2]-pos_current[1]])
+			print("")
+			print("Current Position")
+			print(pos_current)
+			print("")
+			print("Desired Position")
+			print([pos_d[1], pos_d[2]])
+			print("")
 		position_error=[pos_d[1]-pos_current[0],pos_d[2]-pos_current[1]]
 		# u = PD control with gravity compensation
 		u=[g_q[0]+K_p*position_error[0]-K_d*angular_velocity[0],\
