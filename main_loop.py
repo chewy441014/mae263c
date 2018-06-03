@@ -341,7 +341,7 @@ def control1(pos_d):
 		tolerance=0.005
 		pos_error1=100
 		print("Controlling motor 1")
-		while pos_error1>=tolerance:
+		while abs(pos_error1) >=tolerance:
 			pos_error1=pos_d[0]-countstorad(encoder1_count)
 			duty_cycle_1=100
 			if pos_error1>0:
