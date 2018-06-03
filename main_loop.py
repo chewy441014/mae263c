@@ -351,6 +351,7 @@ def control1(pos_d):
 				clockwise(100-duty_cycle_1,p1,p2,m1_en_pin)
 		p1.stop()
 		p2.stop()
+		time.sleep(2)
 		print("Current Position [rad]")
 		print([countstorad(encoder1_count),countstorad(encoder2_count),countstorad(encoder3_count)])
 		##################################################
@@ -371,7 +372,7 @@ def control1(pos_d):
 #				print("Desired Position")
 #				print([pos_d[1], pos_d[2]])
 #				print("")
-#			position_error=[pos_d[1]-pos_current[0],pos_d[2]-#pos_current[1]]
+#			#position_error=[pos_d[1]-pos_current[0],pos_d[2]-#pos_current[1]]
 #			print("Position Error")
 #			print(position_error)
 #			print("")
@@ -385,7 +386,7 @@ def control1(pos_d):
 #					u[i]=-0.08
 #			
 #			# duty = function(u)
-#			V_d=[R*u[0]/k+k*angular_velocity[0],R*u[1]/k+k*#angular_velocity[1]]
+#			#V_d=[R*u[0]/k+k*angular_velocity[0],R*u[1]/k+k*#angular_velocity[1]]
 #			duty=[V_d[0]/V*100,V_d[1]/V*100]
 #			print("Duty (Before Saturation)")
 #			print(duty)
@@ -445,10 +446,11 @@ def control1(pos_d):
 				clockwise(duty_cycle_3, p5, p6, m3_en_pin)
 			elif position_error>0:
 				clockwise(100-duty_cycle_3, p5, p6, m3_en_pin)
-		print("Current Position [rad]")
-		print([countstorad(encoder1_count),countstorad(encoder2_count),countstorad(encoder3_count)])
 		p5.stop()
 		p6.stop()
+		time.sleep(2)
+		print("Current Position [rad]")
+		print([countstorad(encoder1_count),countstorad(encoder2_count),countstorad(encoder3_count)])
 		enter = raw_input(" About to move motor 2")
 		print("Controlling Motors 2")
 		position_error=100
@@ -462,14 +464,15 @@ def control1(pos_d):
 				clockwise(100-duty_cycle_2, p3, p4, m2_en_pin)
 			elif position_error>0:
 				clockwise(duty_cycle_2, p3, p4, m2_en_pin)
-		print("Current Position [rad]")
-		print([countstorad(encoder1_count),countstorad(encoder2_count),countstorad(encoder3_count)])
 		p1.stop()
 		p2.stop()
 		p3.stop()
 		p4.stop()
 		p5.stop()
 		p6.stop()
+		time.sleep(2)
+		print("Current Position [rad]")
+		print([countstorad(encoder1_count),countstorad(encoder2_count),countstorad(encoder3_count)])
 	except KeyboardInterrupt:
 		p1.stop()
 		p2.stop()
