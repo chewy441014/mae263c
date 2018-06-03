@@ -241,10 +241,12 @@ def encoder1Callback(channel):
 		A = 1
 	else:
 		A = 0
+	print A
 	if io.input(encoder1_sensors[1]):
 		B = 1
 	else:
 		B = 0
+	print B
 	if A != A1_old:
 		if A != B:
 			encoder1_count += 1
@@ -570,7 +572,7 @@ def test2():
 		print("Velocity")
 		print(vel2)
 		print("Joint Position")
-		print(countstorad(encoder2_count))
+		print(countstorad(encoder1_count))
 		time.sleep(1)
 		t += 1
 	p1.stop()
