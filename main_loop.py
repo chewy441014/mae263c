@@ -333,101 +333,115 @@ def keypose(read):
 	return
 	
 def control1(pos_d):
-	# initialize the encoders
-	##################################################
-	#This is for motor1 control
-	##################################################
-	tolerance=0.005
-	pos_error1=100
-	print("Controlling motor 1")
-	while pos_error1>=tolerance:
-		pos_error1=pos_d[0]-countstorad(encoder1_count)
-		duty_cycle_1=100
-		if pos_error1>0:
-			clockwise(duty_cycle_1, p1, p2, m1_en_pin)
-		elif pos_error1<0:
-			counter_clockwise(duty_cycle_1,p1,p2,m1_en_pin)
-	p1.stop()
-	p2.stop()
-	print("Current Position [rad]")
-	print([countstorad(encoder1_count),countstorad(encoder2_count),countstorad(encoder3_count)])
-	##################################################
-	#This is for motor2 and motor3 control
-	##################################################
-	print("Controlling Motors 2 and 3")
-	position_error=[100,100]
-	while max(abs(position_error[0]),abs(position_error[1])) > tolerance:
-		# get current position
-		pos_current=[countstorad(encoder2_count),countstorad(encoder3_count)]
-		angular_velocity=[vel2,vel3]
-		# estimate g(q)
-		g_q=[(m_link1*len_link1+m_motor*L1+m_link2*L1)*math.cos(pos_current[0])+\
-		m_link2*len_link2*math.cos(pos_current[0]+pos_current[1]),\
-		m_link2*len_link2*math.cos(pos_current[0]+pos_current[1])]
-		# calculate position error
-		if position_error[0] == 100:
-			print("Position Error on First Loop")
-			print([pos_d[1]-pos_current[0],pos_d[2]-pos_current[1]])
+	try:
+		# initialize the encoders
+		##################################################
+		#This is for motor1 control
+		##################################################
+		tolerance=0.005
+		pos_error1=100
+		print("Controlling motor 1")
+		while pos_error1>=tolerance:
+			pos_error1=pos_d[0]-countstorad(encoder1_count)
+			duty_cycle_1=100
+			if pos_error1>0:
+				clockwise(duty_cycle_1, p1, p2, m1_en_pin)
+			elif pos_error1<0:
+				counter_clockwise(duty_cycle_1,p1,p2,m1_en_pin)
+		p1.stop()
+		p2.stop()
+		print("Current Position [rad]")
+		print([countstorad(encoder1_count),countstorad(encoder2_count),countstorad(encoder3_count)])
+		##################################################
+		#This is for motor2 and motor3 control
+		##################################################
+		print("Controlling Motors 2 and 3")
+		position_error=[100,100]
+		while max(abs(position_error[0]),abs(position_error[1])) > tolerance:
+			# get current position
+			pos_current=[countstorad(encoder2_count),countstorad(encoder3_count)]
+			angular_velocity=[vel2,vel3]
+			# estimate g(q)
+			g_q=[(m_link1*len_link1+m_motor*L1+m_link2*L1)*math.cos(pos_current[0])+\
+			m_link2*len_link2*math.cos(pos_current[0]+pos_current[1]),\
+			m_link2*len_link2*math.cos(pos_current[0]+pos_current[1])]
+			# calculate position error
+			if position_error[0] == 100:
+				print("Position Error on First Loop")
+				print([pos_d[1]-pos_current[0],pos_d[2]-pos_current[1]])
+				print("")
+				print("Current Position")
+				print(pos_current)
+				print("")
+				print("Desired Position")
+				print([pos_d[1], pos_d[2]])
+				print("")
+			position_error=[pos_d[1]-pos_current[0],pos_d[2]-pos_current[1]]
+			print("Position Error")
+			print(position_error)
 			print("")
-			print("Current Position")
-			print(pos_current)
+			# u = PD control with gravity compensation
+			u=[g_q[0]+K_p*position_error[0]-K_d*angular_velocity[0],\
+			g_q[1]+K_p*position_error[1]-K_d*angular_velocity[1]]
+			for i in range(2):
+				if u[i]>=0.08:
+					u[i]=0.08
+				elif u[i]<=-0.08:
+					u[i]=-0.08
+			
+			# duty = function(u)
+			V_d=[R*u[0]/k+k*angular_velocity[0],R*u[1]/k+k*angular_velocity[1]]
+			duty=[V_d[0]/V*100,V_d[1]/V*100]
+			print("Duty")
+			print(duty)
 			print("")
-			print("Desired Position")
-			print([pos_d[1], pos_d[2]])
-			print("")
-		position_error=[pos_d[1]-pos_current[0],pos_d[2]-pos_current[1]]
-		# u = PD control with gravity compensation
-		u=[g_q[0]+K_p*position_error[0]-K_d*angular_velocity[0],\
-		g_q[1]+K_p*position_error[1]-K_d*angular_velocity[1]]
-		for i in range(2):
-			if u[i]>=0.08:
-				u[i]=0.08
-			elif u[i]<=-0.08:
-				u[i]=-0.08
-		
-		# duty = function(u)
-		V_d=[R*u[0]/k+k*angular_velocity[0],R*u[1]/k+k*angular_velocity[1]]
-		duty=[V_d[0]/V*100,V_d[1]/V*100]
-
-		# move the motors according to duty
-		#motor1 duty cycle ##############################
-		if duty[0]>0:
-			if duty[0]>=100:
-				duty[0]=100
-			elif duty[0]<=70:
-				duty[0]=50
-			clockwise(duty[0], p3, p4, m2_en_pin)
-		else:
-			if duty[0]<=-100:
-				duty[0]=0
-			elif duty[0] > -100 and duty[0] <= -70:
-				duty[0]=100+duty[0]
-			elif duty[0]>-70:
-				duty[0]=50
-			clockwise(duty[0],p3,p4,m2_en_pin)
-		###################################################
-		#motor2 duty cycle ################################
-		if duty[1]>0:
-			if duty[1]>=100:
-				duty[1]=100
-			elif duty[1]<=70:
-				duty[1]=50
-			clockwise(duty[1], p5, p6, m3_en_pin)
-		else:
-			if duty[1]<=-100:
-				duty[1]=0
-			elif duty[1] > -100 and duty[1] <= -70:
-				duty[1]=100+duty[1]
-			elif duty[1]>-70:
-				duty[1]=50
-			clockwise(duty[1],p5,p6,m3_en_pin)
-		####################################################
-	p1.stop()
-	p2.stop()
-	p3.stop()
-	p4.stop()
-	p5.stop()
-	p6.stop()
+			# move the motors according to duty
+			#motor1 duty cycle ##############################
+			if duty[0]>0:
+				if duty[0]>=100:
+					duty[0]=100
+				elif duty[0]<=70:
+					duty[0]=50
+				clockwise(duty[0], p3, p4, m2_en_pin)
+			else:
+				if duty[0]<=-100:
+					duty[0]=0
+				elif duty[0] > -100 and duty[0] <= -70:
+					duty[0]=100+duty[0]
+				elif duty[0]>-70:
+					duty[0]=50
+				clockwise(duty[0],p3,p4,m2_en_pin)
+			###################################################
+			#motor2 duty cycle ################################
+			if duty[1]>0:
+				if duty[1]>=100:
+					duty[1]=100
+				elif duty[1]<=70:
+					duty[1]=50
+				clockwise(duty[1], p5, p6, m3_en_pin)
+			else:
+				if duty[1]<=-100:
+					duty[1]=0
+				elif duty[1] > -100 and duty[1] <= -70:
+					duty[1]=100+duty[1]
+				elif duty[1]>-70:
+					duty[1]=50
+				clockwise(duty[1],p5,p6,m3_en_pin)
+			####################################################
+		p1.stop()
+		p2.stop()
+		p3.stop()
+		p4.stop()
+		p5.stop()
+		p6.stop()
+	except KeyboardInterrupt:
+		p1.stop()
+		p2.stop()
+		p3.stop()
+		p4.stop()
+		p5.stop()
+		p6.stop()
+		io.cleanup()
 
 def taskcontrol(command_list):
 	n = len(command_list)
