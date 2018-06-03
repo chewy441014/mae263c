@@ -339,6 +339,7 @@ def control1(pos_d):
 	##################################################
 	tolerance=0.005
 	pos_error1=100
+	print("Controlling motor 1")
 	while pos_error1>=tolerance:
 		pos_error1=pos_d[0]-countstorad(encoder1_count)
 		duty_cycle_1=100
@@ -346,9 +347,14 @@ def control1(pos_d):
 			clockwise(duty_cycle_1, p1, p2, m1_en_pin)
 		elif pos_error1<0:
 			counter_clockwise(duty_cycle_1,p1,p2,m1_en_pin)
+	p1.stop()
+	p2.stop()
+	print("Current Position [rad]")
+	print([countstorad(encoder1_count),countstorad(encoder2_count),countstorad(encoder3_count)])
 	##################################################
 	#This is for motor2 and motor3 control
 	##################################################
+	print("Controlling Motors 2 and 3")
 	position_error=[100,100]
 	while max(position_error[0],position_error[1]) > tolerance:
 		# get current position
@@ -382,7 +388,6 @@ def control1(pos_d):
 				duty[0]=50
 			clockwise(duty[0], p3, p4, m2_en_pin)
 		else:
-			print(test)
 			if duty[0]<=-100:
 				duty[0]=0
 			elif duty[0] > -100 and duty[0] <= -70:
@@ -413,7 +418,6 @@ def control1(pos_d):
 	p4.stop()
 	p5.stop()
 	p6.stop()
-
 
 def taskcontrol(command_list):
 	n = len(command_list)
