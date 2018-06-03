@@ -367,12 +367,6 @@ def control1(pos_d):
 			m_link2*len_link2*math.cos(pos_current[0]+pos_current[1])]
 			# calculate position error
 			if position_error[0] == 100:
-				print("Position Error on First Loop")
-				print([pos_d[1]-pos_current[0],pos_d[2]-pos_current[1]])
-				print("")
-				print("Current Position")
-				print(pos_current)
-				print("")
 				print("Desired Position")
 				print([pos_d[1], pos_d[2]])
 				print("")
@@ -392,7 +386,7 @@ def control1(pos_d):
 			# duty = function(u)
 			V_d=[R*u[0]/k+k*angular_velocity[0],R*u[1]/k+k*angular_velocity[1]]
 			duty=[V_d[0]/V*100,V_d[1]/V*100]
-			print("Duty")
+			print("Duty (Before Saturation)")
 			print(duty)
 			print("")
 			# move the motors according to duty
@@ -427,6 +421,15 @@ def control1(pos_d):
 				elif duty[1]>-70:
 					duty[1]=50
 				clockwise(duty[1],p5,p6,m3_en_pin)
+			print("Duty (After Saturation)")
+			print(duty)
+			print("")
+			print("Current Velocity")
+			print(angular_velocity)
+			print("")
+			print("Current Position")
+			print(pos_current)
+			print("")
 			####################################################
 		p1.stop()
 		p2.stop()
