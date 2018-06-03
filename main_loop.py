@@ -357,6 +357,8 @@ def control1(pos_d):
 	print("Controlling Motors 2 and 3")
 	position_error=[100,100]
 	while max(position_error[0],position_error[1]) > tolerance:
+		if position_error[0] == 100:
+			print("You're in the matrix")
 		# get current position
 		pos_current=[countstorad(encoder2_count),countstorad(encoder3_count)]
 		angular_velocity=[vel2,vel3]
@@ -442,15 +444,16 @@ def taskcontrol(command_list):
 		print(cart_pos_d)
 		print("Joint Space Coordinates")
 		print(joint_pos_d)
+		print([countstorad(encoder1_count),countstorad(encoder2_count),countstorad(encoder3_count)])
 		control1(joint_pos_d)
 		print("Motion Complete!")
 		time.sleep(1)
-		control(pose_desired)
+		# control(pose_desired)
 	# end for loop
 	abs_home = [0, 0, -math.pi/2]
 	# return to global home position
 	print("Going to Absolute Home Position")
-	#control1(abs_home)
+	control1(abs_home)
 
 def test1():
 	resetEncoders()
