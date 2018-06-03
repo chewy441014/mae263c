@@ -576,11 +576,11 @@ def test2():
 	p1.stop()
 	p2.stop()
 
-#enter = raw_input("Ready??")
-#print("GO!!!")
-#resetEncoders()
-#command_list = ['g']
-#taskcontrol(command_list)
-test2()
+enter = raw_input("Ready??")
+print("GO!!!")
+resetEncoders()
+command_list = ['g']
+taskcontrol(command_list)
+#test2()
 io.cleanup()
 print("Task Complete")
