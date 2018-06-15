@@ -341,6 +341,8 @@ def control1(pos_d):
 		##################################################
 		tolerance=0.005
 		pos_error1=100
+		f = open('data','a')
+		f.write('New Data Theta 1 \n')
 		print("Controlling motor 1")
 		while abs(pos_error1) >=tolerance:
 			pos_error1=pos_d[0]-countstorad(encoder1_count)
@@ -349,6 +351,8 @@ def control1(pos_d):
 				clockwise(duty_cycle_1, p1, p2, m1_en_pin)
 			elif pos_error1<0:
 				clockwise(100-duty_cycle_1,p1,p2,m1_en_pin)
+			row = str(countstorad(encoder1_count))+'\t'+str(vel1)+'\n'
+			f.write(row)
 		p1.stop()
 		p2.stop()
 		time.sleep(2)
@@ -356,11 +360,14 @@ def control1(pos_d):
 		#This is for motor2 and motor3 control
 		##################################################
 		print("Controlling Motors 2 and 3")
+		f.write('New Data Theta 2, Theta 3 \n')
 		position_error=[100,100]
 		while max(abs(position_error[0]),abs(position_error[1])) > tolerance:
 			# get current position
 			pos_current=[countstorad(encoder2_count),countstorad(encoder3_count)]
 			angular_velocity=[vel2,vel3]
+			row = str(countstorad(encoder2_count))+'\t'+str(vel2)+'\t'+str(countstorad(encoder3_count))+'\t'+str(vel3)+'\n'
+			f.write(row)
 			# estimate g(q)
 			g_q=[(m_link1*len_link1+m_motor*L1+m_link2*L1)*math.cos(pos_current[0])+\
 			m_link2*len_link2*math.cos(pos_current[0]+pos_current[1]),\
@@ -423,10 +430,14 @@ def control2(pos_d):
 		##################################################
 		print("Controlling Motors 2 and 3")
 		position_error=[100,100]
+		f.open('data','a')
+		f.write('New Data Theta 2 Theta 3 \n')
 		while max(abs(position_error[0]),abs(position_error[1])) > tolerance:
 			# get current position
 			pos_current=[countstorad(encoder2_count),countstorad(encoder3_count)]
 			angular_velocity=[vel2,vel3]
+			row = str(countstorad(encoder2_count))+'\t'+str(vel2)+'\t'+str(countstorad(encoder3_count))+'\t'+str(vel3)+'\n'
+			f.write(row)
 			# estimate g(q)
 			g_q=[(m_link1*len_link1+m_motor*L1+m_link2*L1)*math.cos(pos_current[0])+\
 			m_link2*len_link2*math.cos(pos_current[0]+pos_current[1]),\
@@ -483,15 +494,14 @@ def control2(pos_d):
 		##################################################
 		print("Controlling motor 1")
 		while abs(pos_error1) >=tolerance:
+			row = str(countstorad(encoder1_count))+'\t'str(vel1)
+			f.write(row)
 			pos_error1=pos_d[0]-countstorad(encoder1_count)
 			duty_cycle_1=100
 			if pos_error1>0:
 				clockwise(duty_cycle_1, p1, p2, m1_en_pin)
 			elif pos_error1<0:
 				clockwise(100-duty_cycle_1,p1,p2,m1_en_pin)
-		p1.stop()
-		p2.stop()
-		time.sleep(2)
 		p1.stop()
 		p2.stop()
 		p3.stop()
@@ -547,4 +557,6 @@ def taskcontrol(command_list):
 	control2(abs_home)
 	correctEncoders(abs_home)
 	
-
+# This will run when executing the python file, causing the robot to type 'hello'
+command_list = ['h','e','l','l','o']
+taskcontrol(command_list)
